@@ -147,7 +147,6 @@ export async function POST(req: NextRequest) {
         heard_info_scode: data.heardInfoSCode ?? null,
         payment_image: paymentImagePath,
         total_amount: parseFloat(total as string).toFixed(2),
-        updated_at: new Date(),
       },
     });
 

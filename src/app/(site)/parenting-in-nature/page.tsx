@@ -1,4 +1,3 @@
-import DrShaneBackground from "@/assets/images/home/bg-1.svg";
 import DrShaneTextImage from "@/assets/images/home/dr-shane-info.svg";
 import GHText1 from "@/assets/images/home/st-1.svg";
 import GHText2 from "@/assets/images/home/st-2.svg";

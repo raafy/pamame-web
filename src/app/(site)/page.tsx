@@ -1,6 +1,5 @@
 import LearnMoreButtonImage from "@/assets/images/component/learn-more.svg";
 import SmallCompassSeparatorImage from "@/assets/images/component/small-compass.svg";
-import DrShaneBackground from "@/assets/images/home/bg-1.svg";
 import CoachesTextImage from "@/assets/images/home/coaches-info.svg";
 import DrShaneTextImage from "@/assets/images/home/dr-shane-info.svg";
 import GHText5 from "@/assets/images/home/gh-text-5.svg";

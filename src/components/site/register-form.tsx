@@ -36,7 +36,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { useToast } from "../ui/use-toast";
 
 interface FormValues {
   guardian1Name: string;
@@ -191,6 +191,7 @@ const DropzoneField: React.FC<DropzoneFieldProps> = ({ onDrop, file }) => {
 };
 
 const RegisterForm: React.FC = () => {
+  const { toast } = useToast();
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -232,7 +233,7 @@ const RegisterForm: React.FC = () => {
         formData.set("total", total.toString());
         formData.set("data", JSON.stringify(data));
 
-        const response = await fetch("/api/booking-info", {
+        const response = await fetch("/api/registrations", {
           method: "POST",
           body: formData,
         });
@@ -288,7 +289,7 @@ const RegisterForm: React.FC = () => {
     },
   });
 
-  const { register, handleSubmit, formState, watch, control, setValue } = form;
+  const { register, handleSubmit, formState, watch, control } = form;
   const { errors } = formState;
   const {
     childrenAmount,
@@ -335,7 +336,7 @@ const RegisterForm: React.FC = () => {
 
   const copyHandle = () => {
     copyText("8605345668");
-    toast.success("Copied Account Number to Clipboard");
+    toast({ title: "Copied Account Number to Clipboard!" });
   };
 
   const formRef = useRef<HTMLFormElement | null>(null);
