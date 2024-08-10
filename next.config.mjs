@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "pamame.sgp1.cdn.digitaloceanspaces.com",
+        port: "",
+        pathname: "/images/**",
+      },
+    ],
+  },
+};
 
 export default nextConfig;
