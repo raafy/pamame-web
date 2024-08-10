@@ -53,7 +53,7 @@ const RootLayout: React.FC<Readonly<RootLayoutProps>> = ({ children }) => {
           sizes="<generated>"
         />
       </head>
-      <body className="w-dvw min-h-dvh">{children}</body>
+      <body>{children}</body>
     </html>
   );
 };

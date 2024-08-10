@@ -1,6 +1,6 @@
-import BackgroundWhite from "@/assets/images/component/join-glamping-banner/bg-white.svg";
-import BackgroundYellow from "@/assets/images/component/join-glamping-banner/bg-yellow.svg";
-import CampInfo from "@/assets/images/component/join-glamping-banner/camp-lu-ying-info.svg";
+import BackgroundWhite from "@/assets/images/join-glamping-banner/bg-white.svg";
+import BackgroundYellow from "@/assets/images/join-glamping-banner/bg-yellow.svg";
+import CampInfo from "@/assets/images/join-glamping-banner/camp-lu-ying-info.svg";
 import Image from "next/image";
 import Countdown from "./countdown";
 

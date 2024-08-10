@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model registration {
+  id                      Int       @id @default(autoincrement())
+  guardian1_name          String
+  guardian1_contact_no    String
+  guardian1_id_type       String
+  guardian1_ic            String?
+  guardian1_passport      String?
+  guardian1_relationship  String
+  guardian2_name          String
+  guardian2_contact_no    String
+  guardian2_id_type       String
+  guardian2_ic            String?
+  guardian2_passport      String?
+  guardian2_relationship  String
+  main_contact            String
+  address                 String
+  email                   String
+  emergency_name          String
+  emergency_contact_no    String
+  emergency_relationship  String
+  add_adult_amount        Int
+  add_adult1_name         String?
+  add_adult1_contact_no   String?
+  add_adult1_ic           String?
+  add_adult1_relationship String?
+  add_adult2_name         String?
+  add_adult2_contact_no   String?
+  add_adult2_ic           String?
+  add_adult2_relationship String?
+  add_adult3_name         String?
+  add_adult3_contact_no   String?
+  add_adult3_ic           String?
+  add_adult3_relationship String?
+  children_amount         Int
+  child1_name             String
+  child1_nickname         String
+  child1_gender           String
+  child1_age              Int
+  child1_dob              DateTime?
+  child1_id_type          String
+  child1_ic               String?
+  child1_passport         String?
+  child2_name             String?
+  child2_nickname         String?
+  child2_gender           String?
+  child2_age              Int?
+  child2_dob              DateTime?
+  child2_id_type          String?
+  child2_ic               String?
+  child2_passport         String?
+  child3_name             String?
+  child3_nickname         String?
+  child3_gender           String?
+  child3_age              Int?
+  child3_dob              DateTime?
+  child3_id_type          String?
+  child3_ic               String?
+  child3_passport         String?
+  add_child_amount        Int
+  add_child1_name         String?
+  add_child1_nickname     String?
+  add_child1_gender       String?
+  add_child1_age          Int?
+  add_child1_dob          DateTime?
+  add_child1_id_type      String?
+  add_child1_ic           String?
+  add_child1_passport     String?
+  add_child2_name         String?
+  add_child2_nickname     String?
+  add_child2_gender       String?
+  add_child2_age          Int?
+  add_child2_dob          DateTime?
+  add_child2_id_type      String?
+  add_child2_ic           String?
+  add_child2_passport     String?
+  add_child3_name         String?
+  add_child3_nickname     String?
+  add_child3_gender       String?
+  add_child3_age          Int?
+  add_child3_dob          DateTime?
+  add_child3_id_type      String?
+  add_child3_ic           String?
+  add_child3_passport     String?
+  package_default         Int
+  addon_children_below_4  Int
+  addon_children_5_to_10  Int
+  addon_above_10          Int
+  heard_info              String
+  heard_info_others       String?
+  heard_info_scode        String?
+  payment_image           String?
+  total_amount            Decimal
+  created_at              DateTime  @default(now())
+  updated_at              DateTime
+}

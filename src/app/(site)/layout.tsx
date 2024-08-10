@@ -1,4 +1,5 @@
 import WhatsAppLink from "@/assets/icons/whatsapp.png";
+import Navigation from "@/components/site/navigation";
 import { Toaster } from "@/components/ui/toaster";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,7 @@ interface SiteLayoutProps {
 const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
   return (
     <main className="flex flex-grow select-none flex-col">
+      <Navigation />
       <Toaster />
       {children}
       <div className="fixed bottom-4 right-4 z-10 drop-shadow">
