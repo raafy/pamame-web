@@ -4,10 +4,10 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 async function main() {
-  const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASS, 10);
+  const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
 
   await prisma.user.upsert({
-    where: { username: process.env.ADMIN_PASSWORD },
+    where: { username: process.env.ADMIN_USERNAME },
     update: {},
     create: {
       username: "admin",
@@ -15,7 +15,7 @@ async function main() {
     },
   });
 
-  console.log("Admin user created with username: admin and password: admin123");
+  console.log("Admin user created!");
 }
 
 main()
