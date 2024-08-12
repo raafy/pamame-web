@@ -1,5 +1,5 @@
-import { writeFile } from "fs/promises";
-import { NextRequest } from "next/server";
+import { mkdir, writeFile } from "fs/promises";
+import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { join } from "path";
 import { PrismaClient } from "@prisma/client";
@@ -37,25 +37,26 @@ export async function POST(req: NextRequest) {
     console.log(file);
 
     if (!data || !data.email) {
-      console.log("Invalid request data");
       return new Response("Invalid request data", { status: 400 });
     }
 
-    // Handle the payment image upload
-    let paymentImagePath = undefined;
+    let paymentImagePath: string = "";
 
     if (file) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const path = join("/", "tmp", file.name);
-      await writeFile(path, buffer);
+      const uploadDir = join(process.cwd(), "public", "uploads");
+      await mkdir(uploadDir, { recursive: true });
 
-      paymentImagePath = path; // Save the file path to store in the database
+      const filePath = join(uploadDir, file.name);
+      await writeFile(filePath, buffer);
+
+      paymentImagePath = `/uploads/${file.name}`; // Public URL path
     }
 
     // Save the form data to the database using Prisma
-    await prisma.registration.create({
+    const newRegistration = await prisma.registration.create({
       data: {
         guardian1_name: data.guardian1Name,
         guardian1_contact_no: data.guardian1ContactNo,
@@ -157,595 +158,675 @@ export async function POST(req: NextRequest) {
       // "assistme@pamame.com.my",
     ];
 
+    const fullFilePath = join(process.cwd(), "public", paymentImagePath);
+
     await transporter.sendMail({
       from: process.env.MAIL_EMAIL,
       to: mailList,
       subject:
         "感谢您注册参加我们的 72小时·亲子森活挑战营 Thank you for participating in our Family Glamping Trip！",
       html: `
-      <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <style>
-            body {
-            font-family: Arial, sans-serif;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-            }
-            .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #dddddd;
-            background-color: #ffffff;
-            }
-            h1 {
-            font-size: 24px;
-            color: #444444;
-            margin-bottom: 10px;
-            }
-            h2 {
-            font-size: 20px;
-            color: #444444;
-            margin-bottom: 10px;
-            margin-top: 20px;
-            }
-            p {
-            line-height: 1.6;
-            margin-bottom: 10px;
-            }
-            table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            }
-            th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-            }
-            th {
-            background-color: #f2f2f2;
-            }
-            .footer {
-            margin-top: 20px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <p>
-              感谢您报名参加我们的亲子森活挑战营！您的报名信息我们已经成功收到。<br/>
-              Thank you for registering for Family Glamping Trip! We have successfully received your registration information.<br/><br/>
-              以下是您提交的监护人和儿童详细信息。<br/>
-              Below are the details of the guardian and children as submitted.<br/><br/>
-            </p>
-            <h1>Adults' Information</h1>
-            <h2>Main Contact Information</h2>
-            <table>
-              <tr>
-                <th>Main Contact<th>
-                <td>${data.mainContact[0]}</td>
-              </tr>
-              <tr>
-                <th>Email<th>
-                <td>${data.email}</td>
-              </tr>
-              <tr>
-                <th>Address<th>
-                <td>${data.address}</td>
-              </tr>
-              <tr>
-                <th>Referral<th>
-                <td>${data.heardInfo}</td>
-              </tr>
-            </table>
-            <h2>Guardian 1 Information</h2>
-            <table>
-              <tr>
-                <th>Guardian 1 Name</th>
-                <td>${data.guardian1Name}</td>
-              </tr>
-              <tr>
-                <th>Guardian 1 Contact No</th>
-                <td>${data.guardian1ContactNo}</td>
-              </tr>
-              <tr>
-                <th>Guardian 1 ID Type</th>
-                <td>${data.guardian1IDType}</td>
-              </tr>
-              ${
-                data.guardian1IDType === "NRIC"
-                  ? `
-              <tr>
-                <th>Guardian 1 IC</th>
-                <td>${data.guardian1IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Guardian 1 Passport</th>
-                <td>${data.guardian1Passport}</td>
-              </tr>
-              `
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <style>
+              body {
+              font-family: Arial, sans-serif;
+              color: #333333;
+              margin: 0;
+              padding: 0;
               }
-              <tr>
-                <th>Guardian 1 Relationship</th>
-                <td>${data.guardian1Relationship}</td>
-              </tr>
-            </table>
-            <h2>Guardian 2 Information</h2>
-            <table>
-              <tr>
-                <th>Guardian 2 Name</th>
-                <td>${data.guardian2Name}</td>
-              </tr>
-              <tr>
-                <th>Guardian 2 Contact No</th>
-                <td>${data.guardian2ContactNo}</td>
-              </tr>
-              <tr>
-                <th>Guardian 2 ID Type</th>
-                <td>${data.guardian2IDType}</td>
-              </tr>
-              ${
-                data.guardian2IDType === "NRIC"
-                  ? `
-              <tr>
-                <th>Guardian 2 IC</th>
-                <td>${data.guardian2IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Guardian 2 Passport</th>
-                <td>${data.guardian2Passport}</td>
-              </tr>
-              `
+              .container {
+              width: 100%;
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+              border: 1px solid #dddddd;
+              background-color: #ffffff;
               }
-              <tr>
-                <th>Guardian 2 Relationship</th>
-                <td>${data.guardian2Relationship}</td>
-              </tr>
-            </table>
-            ${
-              data.addAdultAmount > 0
-                ? `
-            <h2>Additional Adult 1 Information</h2>
-            <table>
-              <tr>
-                <th>Additional Adult 1 Name</th>
-                <td>${data.addAdult1Name}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 1 Contact No</th>
-                <td>${data.addAdult1ContactNo}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 1 IC</th>
-                <td>${data.addAdult1IC}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 1 Relationship</th>
-                <td>${data.addAdult1Relationship}</td>
-              </tr>
-            </table>
-            `
-                : ""
-            }
-            ${
-              data.addAdultAmount > 1
-                ? `
-            <h2>Additional Adult 2 Information</h2>
-            <table>
-              <tr>
-                <th>Additional Adult 2 Name</th>
-                <td>${data.addAdult2Name}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 2 Contact No</th>
-                <td>${data.addAdult2ContactNo}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 2 IC</th>
-                <td>${data.addAdult2IC}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 2 Relationship</th>
-                <td>${data.addAdult2Relationship}</td>
-              </tr>
-            </table>
-            `
-                : ""
-            }
-            ${
-              data.addAdultAmount > 2
-                ? `
-            <h2>Additional Adult 3 Information</h2>
-            <table>
-              <tr>
-                <th>Additional Adult 3 Name</th>
-                <td>${data.addAdult3Name}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 3 Contact No</th>
-                <td>${data.addAdult3ContactNo}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 3 IC</th>
-                <td>${data.addAdult3IC}</td>
-              </tr>
-              <tr>
-                <th>Additional Adult 3 Relationship</th>
-                <td>${data.addAdult3Relationship}</td>
-              </tr>
-            </table>
-            `
-                : ""
-            }
-            <h1>Children's Information</h1>
-            ${
-              data.childrenAmount > 0
-                ? `
-            <h2>Child 1 Information</h2>
-            <table>
-              <tr>
-                <th>Child 1 Name</th>
-                <td>${data.child1Name}</td>
-              </tr>
-              <tr>
-                <th>Child 1 Nickname</th>
-                <td>${data.child1Nickname}</td>
-              </tr>
-              <tr>
-                <th>Child 1 Gender</th>
-                <td>${data.child1Gender}</td>
-              </tr>
-              <tr>
-                <th>Child 1 Age</th>
-                <td>${data.child1Age}</td>
-              </tr>
-              <tr>
-                <th>Child 1 DOB</th>
-                <td>${data.child1DOB}</td>
-              </tr>
-              <tr>
-                <th>Child 1 ID Type</th>
-                <td>${data.child1IDType}</td>
-              </tr>
-              ${
-                data.child1IDType === "MyKid"
-                  ? `
-              <tr>
-                <th>Child 1 MyKid No</th>
-                <td>${data.child1IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Child 1 Passport</th>
-                <td>${data.child1Passport}</td>
-              </tr>
-              `
+              h1 {
+              font-size: 24px;
+              color: #444444;
+              margin-bottom: 10px;
               }
+              h2 {
+              font-size: 20px;
+              color: #444444;
+              margin-bottom: 10px;
+              margin-top: 20px;
+              }
+              p {
+              line-height: 1.6;
+              margin-bottom: 10px;
+              }
+              table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+              }
+              th, td {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+              }
+              th {
+              background-color: #f2f2f2;
+              }
+              .footer {
+              margin-top: 20px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <p>
+                感谢您报名参加我们的亲子森活挑战营！您的报名信息我们已经成功收到。<br/>
+                Thank you for registering for Family Glamping Trip! We have successfully received your registration information.<br/><br/>
+                以下是您提交的监护人和儿童详细信息。<br/>
+                Below are the details of the guardian and children as submitted.<br/><br/>
+              </p>
+              <h1>Adults' Information</h1>
+              <h2>Main Contact Information</h2>
+              <table>
+                <tr>
+                  <th>Main Contact<th>
+                  <td>${data.mainContact[0]}</td>
+                </tr>
+                <tr>
+                  <th>Email<th>
+                  <td>${data.email}</td>
+                </tr>
+                <tr>
+                  <th>Address<th>
+                  <td>${data.address}</td>
+                </tr>
+                <tr>
+                  <th>Referral<th>
+                  <td>${data.heardInfo}</td>
+                </tr>
               </table>
-              `
-                : ""
-            }
-            ${
-              data.childrenAmount > 1
-                ? `
-            <h2>Child 2 Information</h2>
-            <table>
-              <tr>
-                <th>Child 2 Name</th>
-                <td>${data.child2Name}</td>
-              </tr>
-              <tr>
-                <th>Child 2 Nickname</th>
-                <td>${data.child2Nickname}</td>
-              </tr>
-              <tr>
-                <th>Child 2 Gender</th>
-                <td>${data.child2Gender}</td>
-              </tr>
-              <tr>
-                <th>Child 2 Age</th>
-                <td>${data.child2Age}</td>
-              </tr>
-              <tr>
-                <th>Child 2 DOB</th>
-                <td>${data.child2DOB}</td>
-              </tr>
-              <tr>
-                <th>Child 2 ID Type</th>
-                <td>${data.child2IDType}</td>
-              </tr>
-              ${
-                data.child2IDType === "MyKid"
-                  ? `
-              <tr>
-                <th>Child 2 MyKid No</th>
-                <td>${data.child2IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Child 2 Passport</th>
-                <td>${data.child2Passport}</td>
-              </tr>
-              `
-              }
-              </table>
-              `
-                : ""
-            }
-            ${
-              data.childrenAmount > 2
-                ? `
-            <h2>Child 3 Information</h2>
-            <table>
-              <tr>
-                <th>Child 3 Name</th>
-                <td>${data.child3Name}</td>
-              </tr>
-              <tr>
-                <th>Child 3 Nickname</th>
-                <td>${data.child3Nickname}</td>
-              </tr>
-              <tr>
-                <th>Child 3 Gender</th>
-                <td>${data.child3Gender}</td>
-              </tr>
-              <tr>
-                <th>Child 3 Age</th>
-                <td>${data.child3Age}</td>
-              </tr>
-              <tr>
-                <th>Child 3 DOB</th>
-                <td>${data.child3DOB}</td>
-              </tr>
-              <tr>
-                <th>Child 3 ID Type</th>
-                <td>${data.child3IDType}</td>
-              </tr>
-              ${
-                data.child3IDType === "MyKid"
-                  ? `
-              <tr>
-                <th>Child 3 MyKid No</th>
-                <td>${data.child3IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Child 3 Passport</th>
-                <td>${data.child3Passport}</td>
-              </tr>
-              `
-              }
-              </table>
-              `
-                : ""
-            }
-            ${
-              data.addChildAmount > 0
-                ? `
-            <h2>Additional Child 1 Information</h2>
-            <table>
-              <tr>
-                <th>Additional Child 1 Name</th>
-                <td>${data.addChild1Name}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 1 Nickname</th>
-                <td>${data.addChild1Nickname}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 1 Gender</th>
-                <td>${data.addChild1Gender}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 1 Age</th>
-                <td>${data.addChild1Age}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 1 DOB</th>
-                <td>${data.addChild1DOB}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 1 ID Type</th>
-                <td>${data.addChild1IDType}</td>
-              </tr>
-              ${
-                data.addChild1IDType === "MyKid"
-                  ? `
-              <tr>
-                <th>Additional Child 1 MyKid No</th>
-                <td>${data.addChild1IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Additional Child 1 Passport</th>
-                <td>${data.addChild1Passport}</td>
-              </tr>
-              `
-              }
-              </table>
-              `
-                : ""
-            }
-            ${
-              data.addChildAmount > 1
-                ? `
-            <h2>Additional Child 2 Information</h2>
-            <table>
-              <tr>
-                <th>Additional Child 2 Name</th>
-                <td>${data.addChild2Name}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 2 Nickname</th>
-                <td>${data.addChild2Nickname}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 2 Gender</th>
-                <td>${data.addChild2Gender}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 2 Age</th>
-                <td>${data.addChild2Age}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 2 DOB</th>
-                <td>${data.addChild2DOB}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 2 ID Type</th>
-                <td>${data.addChild2IDType}</td>
-              </tr>
-              ${
-                data.addChild2IDType === "MyKid"
-                  ? `
-              <tr>
-                <th>Additional Child 2 MyKid No</th>
-                <td>${data.addChild2IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Additional Child 2 Passport</th>
-                <td>${data.addChild2Passport}</td>
-              </tr>
-              `
-              }
-              </table>
-              `
-                : ""
-            }
-            ${
-              data.addChildAmount > 2
-                ? `
-            <h2>Additional Child 3 Information</h2>
-            <table>
-              <tr>
-                <th>Additional Child 3 Name</th>
-                <td>${data.addChild3Name}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 3 Nickname</th>
-                <td>${data.addChild3Nickname}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 3 Gender</th>
-                <td>${data.addChild3Gender}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 3 Age</th>
-                <td>${data.addChild3Age}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 3 DOB</th>
-                <td>${data.addChild3DOB}</td>
-              </tr>
-              <tr>
-                <th>Additional Child 3 ID Type</th>
-                <td>${data.addChild3IDType}</td>
-              </tr>
-              ${
-                data.addChild3IDType === "MyKid"
-                  ? `
-              <tr>
-                <th>Additional Child 3 MyKid No</th>
-                <td>${data.addChild3IC}</td>
-              </tr>
-              `
-                  : `
-              <tr>
-                <th>Additional Child 3 Passport</th>
-                <td>${data.addChild3Passport}</td>
-              </tr>
-              `
-              }
-              </table>
-              `
-                : ""
-            }
-            <p>
-              以下是您选择的配套：<br/>
-              Below is the package you have selected:
-            </p>
-            <ul>
-              ${
-                data.packageDefault === "2800"
-                  ? `
-              <li>2 Adults 1 Child</li>
-              `
-                  : data.packageDefault === "1900"
+              <h2>Guardian 1 Information</h2>
+              <table>
+                <tr>
+                  <th>Guardian 1 Name</th>
+                  <td>${data.guardian1Name}</td>
+                </tr>
+                <tr>
+                  <th>Guardian 1 Contact No</th>
+                  <td>${data.guardian1ContactNo}</td>
+                </tr>
+                <tr>
+                  <th>Guardian 1 ID Type</th>
+                  <td>${data.guardian1IDType}</td>
+                </tr>
+                ${
+                  data.guardian1IDType === "NRIC"
                     ? `
-              <li>1 Adult 1 Child</li>
+                <tr>
+                  <th>Guardian 1 IC</th>
+                  <td>${data.guardian1IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Guardian 1 Passport</th>
+                  <td>${data.guardian1Passport}</td>
+                </tr>
+                `
+                }
+                <tr>
+                  <th>Guardian 1 Relationship</th>
+                  <td>${data.guardian1Relationship}</td>
+                </tr>
+              </table>
+              <h2>Guardian 2 Information</h2>
+              <table>
+                <tr>
+                  <th>Guardian 2 Name</th>
+                  <td>${data.guardian2Name}</td>
+                </tr>
+                <tr>
+                  <th>Guardian 2 Contact No</th>
+                  <td>${data.guardian2ContactNo}</td>
+                </tr>
+                <tr>
+                  <th>Guardian 2 ID Type</th>
+                  <td>${data.guardian2IDType}</td>
+                </tr>
+                ${
+                  data.guardian2IDType === "NRIC"
+                    ? `
+                <tr>
+                  <th>Guardian 2 IC</th>
+                  <td>${data.guardian2IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Guardian 2 Passport</th>
+                  <td>${data.guardian2Passport}</td>
+                </tr>
+                `
+                }
+                <tr>
+                  <th>Guardian 2 Relationship</th>
+                  <td>${data.guardian2Relationship}</td>
+                </tr>
+              </table>
+              ${
+                data.addAdultAmount > 0
+                  ? `
+              <h2>Additional Adult 1 Information</h2>
+              <table>
+                <tr>
+                  <th>Additional Adult 1 Name</th>
+                  <td>${data.addAdult1Name}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 1 Contact No</th>
+                  <td>${data.addAdult1ContactNo}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 1 IC</th>
+                  <td>${data.addAdult1IC}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 1 Relationship</th>
+                  <td>${data.addAdult1Relationship}</td>
+                </tr>
+              </table>
               `
+                  : ""
+              }
+              ${
+                data.addAdultAmount > 1
+                  ? `
+              <h2>Additional Adult 2 Information</h2>
+              <table>
+                <tr>
+                  <th>Additional Adult 2 Name</th>
+                  <td>${data.addAdult2Name}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 2 Contact No</th>
+                  <td>${data.addAdult2ContactNo}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 2 IC</th>
+                  <td>${data.addAdult2IC}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 2 Relationship</th>
+                  <td>${data.addAdult2Relationship}</td>
+                </tr>
+              </table>
+              `
+                  : ""
+              }
+              ${
+                data.addAdultAmount > 2
+                  ? `
+              <h2>Additional Adult 3 Information</h2>
+              <table>
+                <tr>
+                  <th>Additional Adult 3 Name</th>
+                  <td>${data.addAdult3Name}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 3 Contact No</th>
+                  <td>${data.addAdult3ContactNo}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 3 IC</th>
+                  <td>${data.addAdult3IC}</td>
+                </tr>
+                <tr>
+                  <th>Additional Adult 3 Relationship</th>
+                  <td>${data.addAdult3Relationship}</td>
+                </tr>
+              </table>
+              `
+                  : ""
+              }
+              <h1>Children's Information</h1>
+              ${
+                data.childrenAmount > 0
+                  ? `
+              <h2>Child 1 Information</h2>
+              <table>
+                <tr>
+                  <th>Child 1 Name</th>
+                  <td>${data.child1Name}</td>
+                </tr>
+                <tr>
+                  <th>Child 1 Nickname</th>
+                  <td>${data.child1Nickname}</td>
+                </tr>
+                <tr>
+                  <th>Child 1 Gender</th>
+                  <td>${data.child1Gender}</td>
+                </tr>
+                <tr>
+                  <th>Child 1 Age</th>
+                  <td>${data.child1Age}</td>
+                </tr>
+                <tr>
+                  <th>Child 1 DOB</th>
+                  <td>${data.child1DOB}</td>
+                </tr>
+                <tr>
+                  <th>Child 1 ID Type</th>
+                  <td>${data.child1IDType}</td>
+                </tr>
+                ${
+                  data.child1IDType === "MyKid"
+                    ? `
+                <tr>
+                  <th>Child 1 MyKid No</th>
+                  <td>${data.child1IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Child 1 Passport</th>
+                  <td>${data.child1Passport}</td>
+                </tr>
+                `
+                }
+                </table>
+                `
+                  : ""
+              }
+              ${
+                data.childrenAmount > 1
+                  ? `
+              <h2>Child 2 Information</h2>
+              <table>
+                <tr>
+                  <th>Child 2 Name</th>
+                  <td>${data.child2Name}</td>
+                </tr>
+                <tr>
+                  <th>Child 2 Nickname</th>
+                  <td>${data.child2Nickname}</td>
+                </tr>
+                <tr>
+                  <th>Child 2 Gender</th>
+                  <td>${data.child2Gender}</td>
+                </tr>
+                <tr>
+                  <th>Child 2 Age</th>
+                  <td>${data.child2Age}</td>
+                </tr>
+                <tr>
+                  <th>Child 2 DOB</th>
+                  <td>${data.child2DOB}</td>
+                </tr>
+                <tr>
+                  <th>Child 2 ID Type</th>
+                  <td>${data.child2IDType}</td>
+                </tr>
+                ${
+                  data.child2IDType === "MyKid"
+                    ? `
+                <tr>
+                  <th>Child 2 MyKid No</th>
+                  <td>${data.child2IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Child 2 Passport</th>
+                  <td>${data.child2Passport}</td>
+                </tr>
+                `
+                }
+                </table>
+                `
+                  : ""
+              }
+              ${
+                data.childrenAmount > 2
+                  ? `
+              <h2>Child 3 Information</h2>
+              <table>
+                <tr>
+                  <th>Child 3 Name</th>
+                  <td>${data.child3Name}</td>
+                </tr>
+                <tr>
+                  <th>Child 3 Nickname</th>
+                  <td>${data.child3Nickname}</td>
+                </tr>
+                <tr>
+                  <th>Child 3 Gender</th>
+                  <td>${data.child3Gender}</td>
+                </tr>
+                <tr>
+                  <th>Child 3 Age</th>
+                  <td>${data.child3Age}</td>
+                </tr>
+                <tr>
+                  <th>Child 3 DOB</th>
+                  <td>${data.child3DOB}</td>
+                </tr>
+                <tr>
+                  <th>Child 3 ID Type</th>
+                  <td>${data.child3IDType}</td>
+                </tr>
+                ${
+                  data.child3IDType === "MyKid"
+                    ? `
+                <tr>
+                  <th>Child 3 MyKid No</th>
+                  <td>${data.child3IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Child 3 Passport</th>
+                  <td>${data.child3Passport}</td>
+                </tr>
+                `
+                }
+                </table>
+                `
+                  : ""
+              }
+              ${
+                data.addChildAmount > 0
+                  ? `
+              <h2>Additional Child 1 Information</h2>
+              <table>
+                <tr>
+                  <th>Additional Child 1 Name</th>
+                  <td>${data.addChild1Name}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 1 Nickname</th>
+                  <td>${data.addChild1Nickname}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 1 Gender</th>
+                  <td>${data.addChild1Gender}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 1 Age</th>
+                  <td>${data.addChild1Age}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 1 DOB</th>
+                  <td>${data.addChild1DOB}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 1 ID Type</th>
+                  <td>${data.addChild1IDType}</td>
+                </tr>
+                ${
+                  data.addChild1IDType === "MyKid"
+                    ? `
+                <tr>
+                  <th>Additional Child 1 MyKid No</th>
+                  <td>${data.addChild1IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Additional Child 1 Passport</th>
+                  <td>${data.addChild1Passport}</td>
+                </tr>
+                `
+                }
+                </table>
+                `
+                  : ""
+              }
+              ${
+                data.addChildAmount > 1
+                  ? `
+              <h2>Additional Child 2 Information</h2>
+              <table>
+                <tr>
+                  <th>Additional Child 2 Name</th>
+                  <td>${data.addChild2Name}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 2 Nickname</th>
+                  <td>${data.addChild2Nickname}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 2 Gender</th>
+                  <td>${data.addChild2Gender}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 2 Age</th>
+                  <td>${data.addChild2Age}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 2 DOB</th>
+                  <td>${data.addChild2DOB}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 2 ID Type</th>
+                  <td>${data.addChild2IDType}</td>
+                </tr>
+                ${
+                  data.addChild2IDType === "MyKid"
+                    ? `
+                <tr>
+                  <th>Additional Child 2 MyKid No</th>
+                  <td>${data.addChild2IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Additional Child 2 Passport</th>
+                  <td>${data.addChild2Passport}</td>
+                </tr>
+                `
+                }
+                </table>
+                `
+                  : ""
+              }
+              ${
+                data.addChildAmount > 2
+                  ? `
+              <h2>Additional Child 3 Information</h2>
+              <table>
+                <tr>
+                  <th>Additional Child 3 Name</th>
+                  <td>${data.addChild3Name}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 3 Nickname</th>
+                  <td>${data.addChild3Nickname}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 3 Gender</th>
+                  <td>${data.addChild3Gender}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 3 Age</th>
+                  <td>${data.addChild3Age}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 3 DOB</th>
+                  <td>${data.addChild3DOB}</td>
+                </tr>
+                <tr>
+                  <th>Additional Child 3 ID Type</th>
+                  <td>${data.addChild3IDType}</td>
+                </tr>
+                ${
+                  data.addChild3IDType === "MyKid"
+                    ? `
+                <tr>
+                  <th>Additional Child 3 MyKid No</th>
+                  <td>${data.addChild3IC}</td>
+                </tr>
+                `
+                    : `
+                <tr>
+                  <th>Additional Child 3 Passport</th>
+                  <td>${data.addChild3Passport}</td>
+                </tr>
+                `
+                }
+                </table>
+                `
+                  : ""
+              }
+              <p>
+                以下是您选择的配套：<br/>
+                Below is the package you have selected:
+              </p>
+              <ul>
+                ${
+                  data.packageDefault === "2800"
+                    ? `
+                <li>2 Adults 1 Child</li>
+                `
+                    : data.packageDefault === "1900"
+                      ? `
+                <li>1 Adult 1 Child</li>
+                `
+                      : ""
+                }
+                ${
+                  data.addonChildrenBelow4 > 0
+                    ? `
+                <li>添加额外孩子 (<4yo）Additional Child (<4yo) x ${data.addonChildrenBelow4 === 60 ? "1" : data.addonChildrenBelow4 === 120 ? "2" : data.addonChildrenBelow4 === 180 ? "3" : ""}</li>
+                `
                     : ""
-              }
-              ${
-                data.addonChildrenBelow4 > 0
-                  ? `
-              <li>添加额外孩子 (<4yo）Additional Child (<4yo) x ${data.addonChildrenBelow4 === 60 ? "1" : data.addonChildrenBelow4 === 120 ? "2" : data.addonChildrenBelow4 === 180 ? "3" : ""}</li>
-              `
-                  : ""
-              }
-              ${
-                data.addonChildren5to10 > 0
-                  ? `
-              <li>添加额外孩子 (5-10yo）Additional Child (5-10yo) x ${data.addonChildren5to10 === 900 ? "1" : data.addonChildren5to10 === 1800 ? "2" : data.addonChildren5to10 === 2700 ? "3" : ""}</li>
-              `
-                  : ""
-              }
-              ${
-                data.addonAbove10 > 0
-                  ? `
-              <li>添加额外成人 (>12yo）Additional Adult (>12yo) x ${data.addonAbove10 === 450 ? "1" : data.addonAbove10 === 900 ? "2" : data.addonAbove10 === 1350 ? "3" : ""}</li>
-              `
-                  : ""
-              }
-            </ul>
-            <p><strong>Total Amount Paid: </strong> RM ${total}</p>
-            <div class="footer">
-              <p>
-                我们将在2个工作日内通过私信通知您注册成功。<br/>
-                You will be informed of your successful registration via WhatsApp PM within 2 working days.<br/><br/>
-                收据将在5个工作日内通过 WhatsApp 私信发送。<br/>
-                A receipt will be issued within 5 working days.<br/><br/>
-                非常高兴能与您一同度过这个充满乐趣的活动。<br/>
-                We are very excited to spend this fun-filled event with you!<br/><br/>
-                如果您有任何疑问，请随时联系我们的客户服务。<br/>
-                If you have any inquiries, please do not hesitate to contact our customer service.<br/><br/>
-              </p>
-              <p>CLICK to WhatsApp us -> <a href="https://api.whatsapp.com/send?phone=60143943403" target="_blank">[014-3943 403]</a></p>
-              <p>
-                Best Regards,<br/><br/>
-                PaMaMe
-              </p>
+                }
+                ${
+                  data.addonChildren5to10 > 0
+                    ? `
+                <li>添加额外孩子 (5-10yo）Additional Child (5-10yo) x ${data.addonChildren5to10 === 900 ? "1" : data.addonChildren5to10 === 1800 ? "2" : data.addonChildren5to10 === 2700 ? "3" : ""}</li>
+                `
+                    : ""
+                }
+                ${
+                  data.addonAbove10 > 0
+                    ? `
+                <li>添加额外成人 (>12yo）Additional Adult (>12yo) x ${data.addonAbove10 === 450 ? "1" : data.addonAbove10 === 900 ? "2" : data.addonAbove10 === 1350 ? "3" : ""}</li>
+                `
+                    : ""
+                }
+              </ul>
+              <p><strong>Total Amount Paid: </strong> RM ${total}</p>
+              <div class="footer">
+                <p>
+                  我们将在2个工作日内通过私信通知您注册成功。<br/>
+                  You will be informed of your successful registration via WhatsApp PM within 2 working days.<br/><br/>
+                  收据将在5个工作日内通过 WhatsApp 私信发送。<br/>
+                  A receipt will be issued within 5 working days.<br/><br/>
+                  非常高兴能与您一同度过这个充满乐趣的活动。<br/>
+                  We are very excited to spend this fun-filled event with you!<br/><br/>
+                  如果您有任何疑问，请随时联系我们的客户服务。<br/>
+                  If you have any inquiries, please do not hesitate to contact our customer service.<br/><br/>
+                </p>
+                <p>CLICK to WhatsApp us -> <a href="https://api.whatsapp.com/send?phone=60143943403" target="_blank">[014-3943 403]</a></p>
+                <p>
+                  Best Regards,<br/><br/>
+                  PaMaMe
+                </p>
+              </div>
             </div>
-          </div>
-        </body>
-      </html>
-      `,
+          </body>
+        </html>
+        `,
       attachments: [
         {
           filename: file.name,
-          path: paymentImagePath,
+          path: fullFilePath,
         },
       ],
     });
 
-    return new Response("Success!", { status: 200 });
+    return NextResponse.json(newRegistration, { status: 201 });
   } catch (error) {
     console.log("Error sending email:", error);
+    return NextResponse.json(
+      { error: "Failed to create registration" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const registrations = await prisma.registration.findMany({
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+    return NextResponse.json(registrations);
+  } catch (error) {
+    console.error("Error fetching registrations:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch registrations" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const formData = await req.formData();
+    const json = formData.get("data") as string;
+    const data = JSON.parse(json);
+    const file: File | null = formData.get("file") as unknown as File;
+
+    let paymentImagePath = data.payment_image;
+
+    if (file) {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const path = join("/uploads", file.name);
+      await writeFile(path, buffer);
+      paymentImagePath = path; // Update the image path if a new file is uploaded
+    }
+
+    await prisma.registration.update({
+      where: { id: data.id },
+      data: {
+        ...data,
+        payment_image: paymentImagePath,
+      },
+    });
+
+    return new Response("Success!", { status: 200 });
+  } catch (error) {
+    console.error("Error updating registration:", error);
     return new Response("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Missing registration ID" },
+        { status: 400 },
+      );
+    }
+
+    await prisma.registration.delete({
+      where: { id: Number(id) },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting registration:", error);
+    return NextResponse.json(
+      { error: "Failed to delete registration" },
+      { status: 500 },
+    );
   }
 }

@@ -237,7 +237,7 @@ const RegisterForm: React.FC = () => {
           method: "POST",
           body: formData,
         });
-        if (response.status === 200) {
+        if (response.ok) {
           setLoading(false);
           setSuccess(true);
         } else {

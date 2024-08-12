@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE `PageView` ADD COLUMN `city` VARCHAR(191) NULL,
+    ADD COLUMN `country` VARCHAR(191) NULL,
+    ADD COLUMN `referrer` VARCHAR(191) NULL,
+    ADD COLUMN `region` VARCHAR(191) NULL,
+    ADD COLUMN `sessionId` VARCHAR(191) NULL;

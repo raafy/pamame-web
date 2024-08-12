@@ -8,6 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -26,25 +27,36 @@ const AuthContext = createContext<AuthContextProps>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
     const checkAuth = async () => {
       const res = await fetch("/api/admin/verify-session");
+
       if (res.ok) {
-        setIsAuthenticated(true);
+        const data = await res.json();
+        if (data.success) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
       } else {
         setIsAuthenticated(false);
       }
       setLoading(false);
     };
+
     checkAuth();
   }, []);
 
   const login = async () => {
-    // Assuming login is done elsewhere, just update state here
     setIsAuthenticated(true);
-    router.push("/admin");
+    toast({
+      variant: "default",
+      title: "Logged In Successfully",
+      duration: 2000,
+    });
   };
 
   const logout = async () => {
@@ -53,6 +65,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
     setIsAuthenticated(false);
     router.push("/admin");
+    toast({
+      variant: "default",
+      title: "Logged Out Successfully",
+      duration: 2000,
+    });
   };
 
   return (

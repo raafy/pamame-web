@@ -15,7 +15,20 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model registration {
+model PageView {
+  id        Int      @id @default(autoincrement())
+  path      String
+  ipAddress String
+  userAgent String
+  referrer  String? // Added referrer field
+  sessionId String? // Added sessionId field
+  country   String? // Added country field
+  region    String? // Added region field
+  city      String? // Added city field
+  createdAt DateTime @default(now())
+}
+
+model Registration {
   id                      Int       @id @default(autoincrement())
   guardian1_name          String
   guardian1_contact_no    String
