@@ -10,7 +10,7 @@ async function main() {
     where: { username: process.env.ADMIN_USERNAME },
     update: {},
     create: {
-      username: "admin",
+      username: process.env.ADMIN_USERNAME,
       password: hashedPassword,
     },
   });
