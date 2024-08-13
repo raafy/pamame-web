@@ -17,10 +17,6 @@ import {
   Typography,
 } from "@mui/material";
 import type { Registration } from "registration";
-import { Document, Page } from 'react-pdf';
-import { pdfjs } from 'react-pdf';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
 import Image from "next/image";
 
 interface ViewRegistrationModalProps {
@@ -28,10 +24,6 @@ interface ViewRegistrationModalProps {
   onClose: () => void;
 }
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
 
 
 const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
@@ -595,14 +587,15 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
                 />
               )}
               {isPDF(registration.payment_image) && (
-                <div>
-                <Document file={registration.payment_image} onLoadSuccess={onDocumentLoadSuccess}>
-                  <Page pageNumber={pageNumber} />
-                </Document>
-                <p>
-                  Page {pageNumber} of {numPages}
-                </p>
-              </div>
+                <Button
+                variant="outlined"
+                color="primary"
+                href={registration.payment_image}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Payment Receipt (PDF)
+              </Button>
               )}
               {!isImage(registration.payment_image) && !isPDF(registration.payment_image) && (
                 <Typography>Unsupported file type</Typography>
