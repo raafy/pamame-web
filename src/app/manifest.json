@@ -1,32 +1,36 @@
 {
+  "name": "PaMaMe",
+  "short_name": "PaMaMe",
+  "description": "PaMaMe is a journey of companion to a family. Strong bond and relationship create a profound foundation for families. Equal commitment, care, and love given by both PaPa and MaMa gives to their children (Me) is important to a harmonious family. With this idea in mind – PaMaMe is founded. We are dedicated to improve the quality of life for families and children by inspiring parents through building resilience, developing positive self-worth, and mastering emotional intelligence. We offer parents the opportunity to bond and connect with their children through our curated bonding activities and experimental workshops.",
   "theme_color": "#86a9a5",
   "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/",
+  "start_url": "/",
+  "lang": "en-GB",
+  "dir": "auto",
   "icons": [
     {
       "src": "/favicon.ico",
-      "sizes": "16x16",
+      "sizes": "16x16 32x32 48x48",
       "type": "image/x-icon"
     },
     {
-      "purpose": "maskable",
-      "sizes": "512x512",
-      "src": "/icon.png",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "purpose": "any",
+      "src": "/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
       "src": "/apple-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
-  ],
-  "orientation": "any",
-  "display": "standalone",
-  "dir": "auto",
-  "lang": "en-GB",
-  "name": "PaMaMe",
-  "short_name": "PaMaMe",
-  "start_url": "/",
-  "scope": "/",
-  "description": "PaMaMe is a journey of companion to a family. Strong bond and relationship create a profound foundation for families. Equal commitment, care, and love given by both PaPa and MaMa gives to their children (Me) is important to a harmonious family. With this idea in mind – PaMaMe is founded. We are dedicated to improve the quality of life for families and children by inspiring parents through building resilience, developing positive self-worth, and mastering emotional intelligence. We offer parents the opportunity to bond and connect with their children through our curated bonding activities and experimental workshops."
+  ]
 }

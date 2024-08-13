@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-interface Registration {
+interface RegistrationN {
   id: number;
   guardian1_name: string;
   guardian1_contact_no: string;
@@ -29,7 +29,7 @@ interface Registration {
 }
 
 interface RegistrationTableProps {
-  registrations: Registration[];
+  registrations: RegistrationN[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
   onViewReceipt: (imagePath: string) => void;

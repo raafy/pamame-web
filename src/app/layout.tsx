@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Metadata } from "next";
 import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
+import Head from "next/head";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -30,6 +31,10 @@ const aurore = localFont({
 export const metadata: Metadata = {
   title: "PaMaMe",
   description: "Always accompany, Love abundantly",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-icon.png',
+  },
 };
 
 const RootLayout: React.FC<Readonly<RootLayoutProps>> = ({ children }) => {
@@ -38,21 +43,6 @@ const RootLayout: React.FC<Readonly<RootLayoutProps>> = ({ children }) => {
       lang="en"
       className={clsx(poppins.variable, beachday.variable, aurore.variable)}
     >
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link
-          rel="icon"
-          href="/icon?<generated>"
-          type="image/<generated>"
-          sizes="<generated>"
-        />
-        <link
-          rel="apple-touch-icon"
-          href="/apple-icon?<generated>"
-          type="image/<generated>"
-          sizes="<generated>"
-        />
-      </head>
       <body>{children}</body>
     </html>
   );

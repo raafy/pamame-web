@@ -1,6 +1,5 @@
 "use client";
 
-import Logo from "@/assets/images/logo.svg";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,14 +8,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/contexts/auth-context";
-import { LogIn } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/auth-context";
+import { LogIn } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const AdminLogin: React.FC = () => {
   const { isAuthenticated, login, loading } = useAuth();

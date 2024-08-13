@@ -13,102 +13,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Visibility as VisibilityIcon } from "@mui/icons-material";
-
-interface Registration {
-  id: number;
-  guardian1_name: string;
-  guardian1_contact_no: string;
-  guardian1_id_type: string;
-  guardian1_ic?: string;
-  guardian1_passport?: string;
-  guardian1_relationship: string;
-  guardian2_name: string;
-  guardian2_contact_no: string;
-  guardian2_id_type: string;
-  guardian2_ic?: string;
-  guardian2_passport?: string;
-  guardian2_relationship: string;
-  main_contact: string;
-  address: string;
-  email: string;
-  emergency_name: string;
-  emergency_contact_no: string;
-  emergency_relationship: string;
-  add_adult_amount: number;
-  add_adult1_name?: string;
-  add_adult1_contact_no?: string;
-  add_adult1_ic?: string;
-  add_adult1_relationship?: string;
-  add_adult2_name?: string;
-  add_adult2_contact_no?: string;
-  add_adult2_ic?: string;
-  add_adult2_relationship?: string;
-  add_adult3_name?: string;
-  add_adult3_contact_no?: string;
-  add_adult3_ic?: string;
-  add_adult3_relationship?: string;
-  children_amount: number;
-  child1_name: string;
-  child1_nickname: string;
-  child1_gender: string;
-  child1_age: number;
-  child1_dob?: Date;
-  child1_id_type: string;
-  child1_ic?: string;
-  child1_passport?: string;
-  child2_name?: string;
-  child2_nickname?: string;
-  child2_gender?: string;
-  child2_age?: number;
-  child2_dob?: Date;
-  child2_id_type?: string;
-  child2_ic?: string;
-  child2_passport?: string;
-  child3_name?: string;
-  child3_nickname?: string;
-  child3_gender?: string;
-  child3_age?: number;
-  child3_dob?: Date;
-  child3_id_type?: string;
-  child3_ic?: string;
-  child3_passport?: string;
-  add_child_amount?: number;
-  add_child1_name?: string;
-  add_child1_nickname?: string;
-  add_child1_gender?: string;
-  add_child1_age?: number;
-  add_child1_dob?: Date;
-  add_child1_id_type?: string;
-  add_child1_ic?: string;
-  add_child1_passport?: string;
-  add_child2_name?: string;
-  add_child2_nickname?: string;
-  add_child2_gender?: string;
-  add_child2_age?: number;
-  add_child2_dob?: Date;
-  add_child2_id_type?: string;
-  add_child2_ic?: string;
-  add_child2_passport?: string;
-  add_child3_name?: string;
-  add_child3_nickname?: string;
-  add_child3_gender?: string;
-  add_child3_age?: number;
-  add_child3_dob?: Date;
-  add_child3_id_type?: string;
-  add_child3_ic?: string;
-  add_child3_passport?: string;
-  package_default: number;
-  addon_children_below_4: number;
-  addon_children_5_to_10: number;
-  addon_above_10: number;
-  heard_info: string;
-  heard_info_others?: string;
-  heard_info_scode?: string;
-  payment_image?: string;
-  total_amount: string;
-  created_at: Date;
-  updated_at: Date;
-}
+import type { Registration } from "registration";
 
 interface EditRegistrationModalProps {
   registration: Registration;
@@ -143,7 +48,105 @@ const EditRegistrationModal: React.FC<EditRegistrationModalProps> = ({
   };
 
   const handleSave = () => {
-    onSave(formData, receiptFile);
+    // Ensure all necessary fields are properly formatted
+    const formattedData: Registration = {
+      id: formData.id,
+      guardian1_name: formData.guardian1_name,
+      guardian1_contact_no: formData.guardian1_contact_no,
+      guardian1_id_type: formData.guardian1_id_type,
+      guardian1_ic: formData.guardian1_ic ?? null,
+      guardian1_passport: formData.guardian1_passport ?? null,
+      guardian1_relationship: formData.guardian1_relationship,
+      guardian2_name: formData.guardian2_name,
+      guardian2_contact_no: formData.guardian2_contact_no,
+      guardian2_id_type: formData.guardian2_id_type,
+      guardian2_ic: formData.guardian2_ic ?? null,
+      guardian2_passport: formData.guardian2_passport ?? null,
+      guardian2_relationship: formData.guardian2_relationship,
+      main_contact: formData.main_contact,
+      address: formData.address,
+      email: formData.email,
+      emergency_name: formData.emergency_name,
+      emergency_contact_no: formData.emergency_contact_no,
+      emergency_relationship: formData.emergency_relationship,
+      add_adult_amount: Number(formData.add_adult_amount), // Convert to number
+      add_adult1_name: formData.add_adult1_name ?? undefined,
+      add_adult1_contact_no: formData.add_adult1_contact_no ?? undefined,
+      add_adult1_ic: formData.add_adult1_ic ?? null,
+      add_adult1_relationship: formData.add_adult1_relationship ?? undefined,
+      add_adult2_name: formData.add_adult2_name ?? undefined,
+      add_adult2_contact_no: formData.add_adult2_contact_no ?? undefined,
+      add_adult2_ic: formData.add_adult2_ic ?? null,
+      add_adult2_relationship: formData.add_adult2_relationship ?? undefined,
+      add_adult3_name: formData.add_adult3_name ?? undefined,
+      add_adult3_contact_no: formData.add_adult3_contact_no ?? undefined,
+      add_adult3_ic: formData.add_adult3_ic ?? null,
+      add_adult3_relationship: formData.add_adult3_relationship ?? undefined,
+      children_amount: Number(formData.children_amount), // Convert to number
+      child1_name: formData.child1_name,
+      child1_nickname: formData.child1_nickname,
+      child1_gender: formData.child1_gender,
+      child1_age: Number(formData.child1_age), // Convert to number
+      child1_dob: formData.child1_dob ? new Date(formData.child1_dob) : null,
+      child1_id_type: formData.child1_id_type,
+      child1_ic: formData.child1_ic ?? null,
+      child1_passport: formData.child1_passport ?? null,
+      child2_name: formData.child2_name ?? undefined,
+      child2_nickname: formData.child2_nickname ?? undefined,
+      child2_gender: formData.child2_gender ?? undefined,
+      child2_age: formData.child2_age ? Number(formData.child2_age) : undefined, // Convert to number
+      child2_dob: formData.child2_dob ? new Date(formData.child2_dob) : null,
+      child2_id_type: formData.child2_id_type ?? undefined,
+      child2_ic: formData.child2_ic ?? null,
+      child2_passport: formData.child2_passport ?? null,
+      child3_name: formData.child3_name ?? undefined,
+      child3_nickname: formData.child3_nickname ?? undefined,
+      child3_gender: formData.child3_gender ?? undefined,
+      child3_age: formData.child3_age ? Number(formData.child3_age) : undefined, // Convert to number
+      child3_dob: formData.child3_dob ? new Date(formData.child3_dob) : null,
+      child3_id_type: formData.child3_id_type ?? undefined,
+      child3_ic: formData.child3_ic ?? null,
+      child3_passport: formData.child3_passport ?? null,
+      add_child_amount: formData.add_child_amount ? Number(formData.add_child_amount) : undefined, // Convert to number
+      add_child1_name: formData.add_child1_name ?? undefined,
+      add_child1_nickname: formData.add_child1_nickname ?? undefined,
+      add_child1_gender: formData.add_child1_gender ?? undefined,
+      add_child1_age: formData.add_child1_age ? Number(formData.add_child1_age) : undefined, // Convert to number
+      add_child1_dob: formData.add_child1_dob ? new Date(formData.add_child1_dob) : null,
+      add_child1_id_type: formData.add_child1_id_type ?? undefined,
+      add_child1_ic: formData.add_child1_ic ?? null,
+      add_child1_passport: formData.add_child1_passport ?? null,
+      add_child2_name: formData.add_child2_name ?? undefined,
+      add_child2_nickname: formData.add_child2_nickname ?? undefined,
+      add_child2_gender: formData.add_child2_gender ?? undefined,
+      add_child2_age: formData.add_child2_age ? Number(formData.add_child2_age) : undefined, // Convert to number
+      add_child2_dob: formData.add_child2_dob ? new Date(formData.add_child2_dob) : null,
+      add_child2_id_type: formData.add_child2_id_type ?? undefined,
+      add_child2_ic: formData.add_child2_ic ?? null,
+      add_child2_passport: formData.add_child2_passport ?? null,
+      add_child3_name: formData.add_child3_name ?? undefined,
+      add_child3_nickname: formData.add_child3_nickname ?? undefined,
+      add_child3_gender: formData.add_child3_gender ?? undefined,
+      add_child3_age: formData.add_child3_age ? Number(formData.add_child3_age) : undefined, // Convert to number
+      add_child3_dob: formData.add_child3_dob ? new Date(formData.add_child3_dob) : null,
+      add_child3_id_type: formData.add_child3_id_type ?? undefined,
+      add_child3_ic: formData.add_child3_ic ?? null,
+      add_child3_passport: formData.add_child3_passport ?? null,
+      package_default: Number(formData.package_default), // Convert to number
+      addon_children_below_4: Number(formData.addon_children_below_4), // Convert to number
+      addon_children_5_to_10: Number(formData.addon_children_5_to_10), // Convert to number
+      addon_above_10: Number(formData.addon_above_10), // Convert to number
+      heard_info: formData.heard_info,
+      heard_info_others: formData.heard_info_others ?? undefined,
+      heard_info_scode: formData.heard_info_scode ?? undefined,
+      payment_image: formData.payment_image ?? undefined,
+      total_amount: parseFloat(formData.total_amount).toFixed(2),
+      created_at: formData.created_at,
+      updated_at: new Date(), // Update the updated_at field with the current date
+    };
+  
+    // Call the onSave function with the formatted data and receipt file
+    onSave(formattedData, receiptFile);
   };
 
   return (

@@ -9,18 +9,19 @@ import {
 } from "@mui/material";
 import { Visibility as VisibilityIcon } from "@mui/icons-material";
 
-interface NewRegistration {
+interface Registration {
+  id: number;
   guardian1_name: string;
   guardian1_contact_no: string;
   guardian1_id_type: string;
-  guardian1_ic?: string;
-  guardian1_passport?: string;
+  guardian1_ic?: string | null;
+  guardian1_passport?: string | null;
   guardian1_relationship: string;
   guardian2_name: string;
   guardian2_contact_no: string;
   guardian2_id_type: string;
-  guardian2_ic?: string;
-  guardian2_passport?: string;
+  guardian2_ic?: string | null;
+  guardian2_passport?: string | null;
   guardian2_relationship: string;
   main_contact: string;
   address: string;
@@ -31,66 +32,66 @@ interface NewRegistration {
   add_adult_amount: number;
   add_adult1_name?: string;
   add_adult1_contact_no?: string;
-  add_adult1_ic?: string;
+  add_adult1_ic?: string | null;
   add_adult1_relationship?: string;
   add_adult2_name?: string;
   add_adult2_contact_no?: string;
-  add_adult2_ic?: string;
+  add_adult2_ic?: string | null;
   add_adult2_relationship?: string;
   add_adult3_name?: string;
   add_adult3_contact_no?: string;
-  add_adult3_ic?: string;
+  add_adult3_ic?: string | null;
   add_adult3_relationship?: string;
   children_amount: number;
   child1_name: string;
   child1_nickname: string;
   child1_gender: string;
   child1_age: number;
-  child1_dob?: Date;
+  child1_dob?: Date | null;
   child1_id_type: string;
-  child1_ic?: string;
-  child1_passport?: string;
+  child1_ic?: string | null;
+  child1_passport?: string | null;
   child2_name?: string;
   child2_nickname?: string;
   child2_gender?: string;
   child2_age?: number;
-  child2_dob?: Date;
+  child2_dob?: Date | null;
   child2_id_type?: string;
-  child2_ic?: string;
-  child2_passport?: string;
+  child2_ic?: string | null;
+  child2_passport?: string | null;
   child3_name?: string;
   child3_nickname?: string;
   child3_gender?: string;
   child3_age?: number;
-  child3_dob?: Date;
+  child3_dob?: Date | null;
   child3_id_type?: string;
-  child3_ic?: string;
-  child3_passport?: string;
+  child3_ic?: string | null;
+  child3_passport?: string | null;
   add_child_amount?: number;
   add_child1_name?: string;
   add_child1_nickname?: string;
   add_child1_gender?: string;
   add_child1_age?: number;
-  add_child1_dob?: Date;
+  add_child1_dob?: Date | null;
   add_child1_id_type?: string;
-  add_child1_ic?: string;
-  add_child1_passport?: string;
+  add_child1_ic?: string | null;
+  add_child1_passport?: string | null;
   add_child2_name?: string;
   add_child2_nickname?: string;
   add_child2_gender?: string;
   add_child2_age?: number;
-  add_child2_dob?: Date;
+  add_child2_dob?: Date | null;
   add_child2_id_type?: string;
-  add_child2_ic?: string;
-  add_child2_passport?: string;
+  add_child2_ic?: string | null;
+  add_child2_passport?: string | null;
   add_child3_name?: string;
   add_child3_nickname?: string;
   add_child3_gender?: string;
   add_child3_age?: number;
-  add_child3_dob?: Date;
+  add_child3_dob?: Date | null;
   add_child3_id_type?: string;
-  add_child3_ic?: string;
-  add_child3_passport?: string;
+  add_child3_ic?: string | null;
+  add_child3_passport?: string | null;
   package_default: number;
   addon_children_below_4: number;
   addon_children_5_to_10: number;
@@ -100,29 +101,33 @@ interface NewRegistration {
   heard_info_scode?: string;
   payment_image?: string;
   total_amount: string;
+  created_at: Date;
+  updated_at: Date;
 }
+
 
 interface AddRegistrationModalProps {
   onClose: () => void;
-  onSave: (newRegistration: NewRegistration, receiptFile: File | null) => void;
+  onSave: (newRegistration: Registration, receiptFile: File | null) => void;
 }
 
 const AddRegistrationModal: React.FC<AddRegistrationModalProps> = ({
   onClose,
   onSave,
 }) => {
-  const [formData, setFormData] = useState<NewRegistration>({
+  const [formData, setFormData] = useState<Registration>({
+    id: 0,
     guardian1_name: "",
     guardian1_contact_no: "",
     guardian1_id_type: "",
-    guardian1_ic: "",
-    guardian1_passport: "",
+    guardian1_ic: null,
+    guardian1_passport: null,
     guardian1_relationship: "",
     guardian2_name: "",
     guardian2_contact_no: "",
     guardian2_id_type: "",
-    guardian2_ic: "",
-    guardian2_passport: "",
+    guardian2_ic: null,
+    guardian2_passport: null,
     guardian2_relationship: "",
     main_contact: "",
     address: "",
@@ -131,77 +136,79 @@ const AddRegistrationModal: React.FC<AddRegistrationModalProps> = ({
     emergency_contact_no: "",
     emergency_relationship: "",
     add_adult_amount: 0,
-    add_adult1_name: "",
-    add_adult1_contact_no: "",
-    add_adult1_ic: "",
-    add_adult1_relationship: "",
-    add_adult2_name: "",
-    add_adult2_contact_no: "",
-    add_adult2_ic: "",
-    add_adult2_relationship: "",
-    add_adult3_name: "",
-    add_adult3_contact_no: "",
-    add_adult3_ic: "",
-    add_adult3_relationship: "",
+    add_adult1_name: undefined,
+    add_adult1_contact_no: undefined,
+    add_adult1_ic: null,
+    add_adult1_relationship: undefined,
+    add_adult2_name: undefined,
+    add_adult2_contact_no: undefined,
+    add_adult2_ic: null,
+    add_adult2_relationship: undefined,
+    add_adult3_name: undefined,
+    add_adult3_contact_no: undefined,
+    add_adult3_ic: null,
+    add_adult3_relationship: undefined,
     children_amount: 0,
     child1_name: "",
     child1_nickname: "",
     child1_gender: "",
     child1_age: 0,
-    child1_dob: undefined,
+    child1_dob: null,
     child1_id_type: "",
-    child1_ic: "",
-    child1_passport: "",
-    child2_name: "",
-    child2_nickname: "",
-    child2_gender: "",
-    child2_age: 0,
-    child2_dob: undefined,
-    child2_id_type: "",
-    child2_ic: "",
-    child2_passport: "",
-    child3_name: "",
-    child3_nickname: "",
-    child3_gender: "",
-    child3_age: 0,
-    child3_dob: undefined,
-    child3_id_type: "",
-    child3_ic: "",
-    child3_passport: "",
-    add_child_amount: 0,
-    add_child1_name: "",
-    add_child1_nickname: "",
-    add_child1_gender: "",
-    add_child1_age: 0,
-    add_child1_dob: undefined,
-    add_child1_id_type: "",
-    add_child1_ic: "",
-    add_child1_passport: "",
-    add_child2_name: "",
-    add_child2_nickname: "",
-    add_child2_gender: "",
-    add_child2_age: 0,
-    add_child2_dob: undefined,
-    add_child2_id_type: "",
-    add_child2_ic: "",
-    add_child2_passport: "",
-    add_child3_name: "",
-    add_child3_nickname: "",
-    add_child3_gender: "",
-    add_child3_age: 0,
-    add_child3_dob: undefined,
-    add_child3_id_type: "",
-    add_child3_ic: "",
-    add_child3_passport: "",
+    child1_ic: null,
+    child1_passport: null,
+    child2_name: undefined,
+    child2_nickname: undefined,
+    child2_gender: undefined,
+    child2_age: undefined,
+    child2_dob: null,
+    child2_id_type: undefined,
+    child2_ic: null,
+    child2_passport: null,
+    child3_name: undefined,
+    child3_nickname: undefined,
+    child3_gender: undefined,
+    child3_age: undefined,
+    child3_dob: null,
+    child3_id_type: undefined,
+    child3_ic: null,
+    child3_passport: null,
+    add_child_amount: undefined,
+    add_child1_name: undefined,
+    add_child1_nickname: undefined,
+    add_child1_gender: undefined,
+    add_child1_age: undefined,
+    add_child1_dob: null,
+    add_child1_id_type: undefined,
+    add_child1_ic: null,
+    add_child1_passport: null,
+    add_child2_name: undefined,
+    add_child2_nickname: undefined,
+    add_child2_gender: undefined,
+    add_child2_age: undefined,
+    add_child2_dob: null,
+    add_child2_id_type: undefined,
+    add_child2_ic: null,
+    add_child2_passport: null,
+    add_child3_name: undefined,
+    add_child3_nickname: undefined,
+    add_child3_gender: undefined,
+    add_child3_age: undefined,
+    add_child3_dob: null,
+    add_child3_id_type: undefined,
+    add_child3_ic: null,
+    add_child3_passport: null,
     package_default: 0,
     addon_children_below_4: 0,
     addon_children_5_to_10: 0,
     addon_above_10: 0,
     heard_info: "",
-    heard_info_others: "",
-    heard_info_scode: "",
-    payment_image: "",
+    heard_info_others: undefined,
+    heard_info_scode: undefined,
+    payment_image: undefined,
     total_amount: "",
+    created_at: new Date(),
+    updated_at: new Date(),
   });
 
   const [receiptFile, setReceiptFile] = useState<File | null>(null);

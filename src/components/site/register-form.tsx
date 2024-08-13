@@ -254,8 +254,12 @@ const RegisterForm: React.FC = () => {
     }
   };
 
-  function copyText(entryText: string) {
-    navigator.clipboard.writeText(entryText);
+  async function copyText(entryText: string) {
+    try {
+      await navigator.clipboard.writeText(entryText);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   const form = useForm<FormValues>({
@@ -341,8 +345,7 @@ const RegisterForm: React.FC = () => {
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  const executeScroll = () =>
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  const executeScroll = () => formRef.current?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <article>
