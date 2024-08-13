@@ -21,6 +21,7 @@ import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import Image from "next/image";
 
 interface ViewRegistrationModalProps {
   registration: Registration;
@@ -587,7 +588,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
             <Grid item xs={12}>
               <Typography variant="h6">Receipt</Typography>
               {isImage(registration.payment_image) && (
-                <img
+                <Image
                   src={registration.payment_image}
                   alt="Receipt"
                   style={{ width: "100%", height: "auto" }}
