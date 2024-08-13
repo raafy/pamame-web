@@ -2,132 +2,97 @@
 
 import React, { useState, useEffect } from "react";
 import RegistrationTable from "@/components/admin/registration-table";
-import EditRegistrationModal from "@/components/admin/edit-registration-modal";
-import AddRegistrationModal from "@/components/admin/new-registration-modal";
-import { Button } from "@mui/material";
+import ViewRegistrationModal from "@/components/admin/view-registration-modal";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import type { Registration } from "registration";
-
 
 const RegistrationManagement: React.FC = () => {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
-  const [selectedRegistration, setSelectedRegistration] =
-    useState<Registration | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [selectedRegistration, setSelectedRegistration] = useState<Registration | null>(null);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchRegistrations = async () => {
-      const response = await fetch("/api/registrations");
-      const data: Registration[] = await response.json();
-      setRegistrations(data);
+      try {
+        const response = await fetch('/api/registrations');
+        const data: Registration[] = await response.json();
+        setRegistrations(data);
+      } catch (error) {
+        console.error('Error fetching registrations:', error);
+      }
     };
 
     fetchRegistrations();
   }, []);
 
-  const handleEdit = (id: number) => {
-    const registration = registrations.find((reg) => reg.id === id);
-    if (registration) {
-      setSelectedRegistration(registration);
-      setIsEditModalOpen(true);
+  const handleView = (registration: Registration) => {
+    setSelectedRegistration(registration);
+    setIsViewModalOpen(true);
+  };
+
+  const handleDeleteRequest = (registration: Registration) => {
+    setSelectedRegistration(registration);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedRegistration) {
+      try {
+        await fetch(`/api/registrations/${selectedRegistration.id}`, {
+          method: 'DELETE',
+        });
+        setRegistrations((prev) => prev.filter((reg) => reg.id !== selectedRegistration.id));
+        setDeleteDialogOpen(false);
+        setSelectedRegistration(null);
+      } catch (error) {
+        console.error('Error deleting registration:', error);
+      }
     }
   };
 
-  const handleDelete = async (id: number) => {
-    await fetch(`/api/registrations/${id}`, {
-      method: "DELETE",
-    });
-
-    setRegistrations((prev) => prev.filter((reg) => reg.id !== id));
-  };
-
-  const handleSave = async (
-    updatedRegistration: Registration,
-    receiptFile: File | null,
-  ) => {
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(updatedRegistration));
-    if (receiptFile) {
-      formData.append("file", receiptFile);
-    }
-
-    await fetch(`/api/registrations/${updatedRegistration.id}`, {
-      method: "PUT",
-      body: formData,
-    });
-
-    setRegistrations((prev) =>
-      prev.map((reg) =>
-        reg.id === updatedRegistration.id ? updatedRegistration : reg,
-      ),
-    );
-    setIsEditModalOpen(false);
-  };
-
-  const handleAdd = async (
-    newRegistration: Registration,
-    receiptFile: File | null,
-  ) => {
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(newRegistration));
-    if (receiptFile) {
-      formData.append("file", receiptFile);
-    }
-
-    const response = await fetch(`/api/registrations`, {
-      method: "POST",
-      body: formData,
-    });
-
-    const createdRegistration: Registration = await response.json();
-    setRegistrations((prev) => [createdRegistration, ...prev]);
-    setIsAddModalOpen(false);
-  };
-
-  const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
+  const cancelDelete = () => {
+    setDeleteDialogOpen(false);
     setSelectedRegistration(null);
   };
 
-  const handleCloseAddModal = () => {
-    setIsAddModalOpen(false);
-  };
-
-  const handleViewReceipt = (imagePath: string) => {
-    window.open(imagePath, "_blank");
+  const closeViewModal = () => {
+    setIsViewModalOpen(false);
+    setSelectedRegistration(null);
   };
 
   return (
     <div className="p-4">
       <h1 className="mb-4 text-2xl font-semibold">Registration Management</h1>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setIsAddModalOpen(true)}
-        className="mb-4"
-      >
-        Add Registration
-      </Button>
       <RegistrationTable
         registrations={registrations}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onViewReceipt={handleViewReceipt}
+        onView={handleView}
+        onDeleteRequest={handleDeleteRequest}
       />
-      {isEditModalOpen && selectedRegistration && (
-        <EditRegistrationModal
+
+      {isViewModalOpen && selectedRegistration && (
+        <ViewRegistrationModal
           registration={selectedRegistration}
-          onClose={handleCloseEditModal}
-          onSave={handleSave}
-          onViewReceipt={handleViewReceipt}
+          onClose={closeViewModal}
         />
       )}
-      {isAddModalOpen && (
-        <AddRegistrationModal
-          onClose={handleCloseAddModal}
-          onSave={handleAdd}
-        />
-      )}
+
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={cancelDelete}
+      >
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>Are you sure you want to delete this registration?</DialogContent>
+        <DialogActions>
+          <Button onClick={cancelDelete}>Cancel</Button>
+          <Button
+            onClick={confirmDelete}
+            color="secondary"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
