@@ -1405,7 +1405,8 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date?.format("DD/MM/YYYY"));
+                              field.onChange(date);
+                              console.log(field.value);
                             }}
                           />
                         );
@@ -1581,7 +1582,7 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date?.format("DD/MM/YYYY"));
+                              field.onChange(date);
                             }}
                           />
                         );
@@ -1757,7 +1758,7 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date?.format("DD/MM/YYYY"));
+                              field.onChange(date);
                             }}
                           />
                         );
@@ -1959,7 +1960,7 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date?.format("DD/MM/YYYY"));
+                              field.onChange(date);
                             }}
                           />
                         );
@@ -2130,7 +2131,7 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date?.format("DD/MM/YYYY"));
+                              field.onChange(date);
                             }}
                           />
                         );
@@ -2301,7 +2302,7 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date?.format("DD/MM/YYYY"));
+                              field.onChange(date);
                             }}
                           />
                         );
