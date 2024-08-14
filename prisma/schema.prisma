@@ -66,7 +66,7 @@ model Registration {
   child1_nickname         String
   child1_gender           String
   child1_age              Int
-  child1_dob              DateTime?
+  child1_dob              String?
   child1_id_type          String
   child1_ic               String?
   child1_passport         String?
@@ -74,7 +74,7 @@ model Registration {
   child2_nickname         String?
   child2_gender           String?
   child2_age              Int?
-  child2_dob              DateTime?
+  child2_dob              String?
   child2_id_type          String?
   child2_ic               String?
   child2_passport         String?
@@ -82,7 +82,7 @@ model Registration {
   child3_nickname         String?
   child3_gender           String?
   child3_age              Int?
-  child3_dob              DateTime?
+  child3_dob              String?
   child3_id_type          String?
   child3_ic               String?
   child3_passport         String?
@@ -91,7 +91,7 @@ model Registration {
   add_child1_nickname     String?
   add_child1_gender       String?
   add_child1_age          Int?
-  add_child1_dob          DateTime?
+  add_child1_dob          String?
   add_child1_id_type      String?
   add_child1_ic           String?
   add_child1_passport     String?
@@ -99,7 +99,7 @@ model Registration {
   add_child2_nickname     String?
   add_child2_gender       String?
   add_child2_age          Int?
-  add_child2_dob          DateTime?
+  add_child2_dob          String?
   add_child2_id_type      String?
   add_child2_ic           String?
   add_child2_passport     String?
@@ -107,7 +107,7 @@ model Registration {
   add_child3_nickname     String?
   add_child3_gender       String?
   add_child3_age          Int?
-  add_child3_dob          DateTime?
+  add_child3_dob          String?
   add_child3_id_type      String?
   add_child3_ic           String?
   add_child3_passport     String?
