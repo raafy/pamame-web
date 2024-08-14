@@ -30,12 +30,6 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
   registration,
   onClose,
 }) => {
-  const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
   const isImage = (fileName: string) => {
     return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(fileName);
   };
@@ -545,7 +539,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
                 <ListItem>
                   <ListItemText
                     primary={`添加额外孩子 (<4yo) Additional Child (<4yo) x ${
-                      registration.addon_children_below_4 / 60
+                      registration.addon_children_below_4
                     }`}
                   />
                 </ListItem>
@@ -554,7 +548,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
                 <ListItem>
                   <ListItemText
                     primary={`添加额外孩子 (5-10yo) Additional Child (5-10yo) x ${
-                      registration.addon_children_5_to_10 / 900
+                      registration.addon_children_5_to_10
                     }`}
                   />
                 </ListItem>
@@ -563,7 +557,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
                 <ListItem>
                   <ListItemText
                     primary={`添加额外成人 (>12yo) Additional Adult (>12yo) x ${
-                      registration.addon_above_10 / 450
+                      registration.addon_above_10
                     }`}
                   />
                 </ListItem>
@@ -579,27 +573,27 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
           {registration.payment_image && (
             <Grid item xs={12}>
               <Typography variant="h6">Receipt</Typography>
-              {isImage(registration.payment_image) && (
+              {isImage(new URL(registration.payment_image).pathname) && (
                 <Image
-                  src={registration.payment_image}
+                  src={new URL(registration.payment_image).pathname}
                   alt="Receipt"
                   width={500}
                   height={500}
                   style={{ width: "100%", height: "auto" }}
                 />
               )}
-              {isPDF(registration.payment_image) && (
+              {isPDF(new URL(registration.payment_image).pathname) && (
                 <Button
                 variant="outlined"
                 color="primary"
-                href={registration.payment_image}
+                href={new URL(registration.payment_image).pathname}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 View Payment Receipt (PDF)
               </Button>
               )}
-              {!isImage(registration.payment_image) && !isPDF(registration.payment_image) && (
+              {!isImage(new URL(registration.payment_image).pathname) && !isPDF(new URL(registration.payment_image).pathname) && (
                 <Typography>Unsupported file type</Typography>
               )}
             </Grid>

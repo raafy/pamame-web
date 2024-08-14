@@ -23,6 +23,8 @@ const Navigation: React.FC = () => {
         return "Parenting In Nature";
       case "/little-hero-challenge":
         return "Little Hero Challenge";
+      case "/terms-and-conditions":
+        return "Little Hero Challenge";
       default:
         break;
     }
@@ -84,6 +86,16 @@ const Navigation: React.FC = () => {
             )}
           >
             Register Now
+          </Link>
+          <Link
+            href={"/terms-and-conditions"}
+            onClick={() => setMenuVisible(false)}
+            className={clsx(
+              "w-full px-4 py-2 font-beachday text-black hover:bg-[#F49F12] hover:text-white",
+              pathname === "/terms-and-conditions" && "hidden",
+            )}
+          >
+            Terms and Conditions
           </Link>
         </div>
       )}
