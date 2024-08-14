@@ -153,9 +153,9 @@ export async function POST(req: NextRequest) {
 
     var mailList = [
       data.email,
-      // "superavatarofficial@gmail.com",
-      // "info@neucleuseducation.com",
-      // "assistme@pamame.com.my",
+      "superavatarofficial@gmail.com",
+      "info@neucleuseducation.com",
+      "assistme@pamame.com.my",
     ];
 
     const fullFilePath = join(process.cwd(), "public", paymentImagePath);

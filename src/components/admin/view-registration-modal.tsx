@@ -571,7 +571,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
               <Typography variant="h6">Receipt</Typography>
               {isImage(new URL(registration.payment_image).pathname) && (
                 <Image
-                  src={new URL(registration.payment_image).pathname}
+                  src={registration.payment_image}
                   alt="Receipt"
                   width={500}
                   height={500}
