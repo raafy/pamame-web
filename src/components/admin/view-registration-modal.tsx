@@ -37,7 +37,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
     setNumPages(numPages);
   }
   const isImage = (fileName: string) => {
-    return /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
+    return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(fileName);
   };
 
   const isPDF = (fileName: string) => {
@@ -544,7 +544,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
               {registration.addon_children_below_4 > 0 && (
                 <ListItem>
                   <ListItemText
-                    primary={`添加额外孩子 (<4yo）Additional Child (<4yo) x ${
+                    primary={`添加额外孩子 (<4yo) Additional Child (<4yo) x ${
                       registration.addon_children_below_4 / 60
                     }`}
                   />
@@ -553,7 +553,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
               {registration.addon_children_5_to_10 > 0 && (
                 <ListItem>
                   <ListItemText
-                    primary={`添加额外孩子 (5-10yo）Additional Child (5-10yo) x ${
+                    primary={`添加额外孩子 (5-10yo) Additional Child (5-10yo) x ${
                       registration.addon_children_5_to_10 / 900
                     }`}
                   />
@@ -562,7 +562,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
               {registration.addon_above_10 > 0 && (
                 <ListItem>
                   <ListItemText
-                    primary={`添加额外成人 (>12yo）Additional Adult (>12yo) x ${
+                    primary={`添加额外成人 (>12yo) Additional Adult (>12yo) x ${
                       registration.addon_above_10 / 450
                     }`}
                   />

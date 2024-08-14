@@ -7,20 +7,19 @@ import {
   BookTextIcon,
   LineChartIcon,
   LogOutIcon,
-  SettingsIcon,
-  MenuIcon,
+  MenuIcon
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useRouter } from "next/navigation";
 
 const DashboardNavigation: React.FC = () => {
   const { logout } = useAuth();
@@ -40,14 +39,6 @@ const DashboardNavigation: React.FC = () => {
         <nav className="mt-8 space-y-1">
           <Link
             href="/admin/dashboard"
-            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
-            prefetch={false}
-          >
-            <LineChartIcon className="h-5 w-5" />
-            Analytics
-          </Link>
-          <Link
-            href="/admin/dashboard/registration"
             className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
             prefetch={false}
           >
