@@ -37,7 +37,7 @@ declare module "registration" {
     child1_nickname: string;
     child1_gender: string;
     child1_age: number;
-    child1_dob?: string | null;
+    child1_dob?: Date | null;
     child1_id_type: string;
     child1_ic?: string | null;
     child1_passport?: string | null;
@@ -45,7 +45,7 @@ declare module "registration" {
     child2_nickname?: string;
     child2_gender?: string;
     child2_age?: number;
-    child2_dob?: string | null;
+    child2_dob?: Date | null;
     child2_id_type?: string;
     child2_ic?: string | null;
     child2_passport?: string | null;
@@ -53,7 +53,7 @@ declare module "registration" {
     child3_nickname?: string;
     child3_gender?: string;
     child3_age?: number;
-    child3_dob?: string | null;
+    child3_dob?: Date | null;
     child3_id_type?: string;
     child3_ic?: string | null;
     child3_passport?: string | null;
@@ -62,7 +62,7 @@ declare module "registration" {
     add_child1_nickname?: string;
     add_child1_gender?: string;
     add_child1_age?: number;
-    add_child1_dob?: string | null;
+    add_child1_dob?: Date | null;
     add_child1_id_type?: string;
     add_child1_ic?: string | null;
     add_child1_passport?: string | null;
@@ -70,7 +70,7 @@ declare module "registration" {
     add_child2_nickname?: string;
     add_child2_gender?: string;
     add_child2_age?: number;
-    add_child2_dob?: string | null;
+    add_child2_dob?: Date | null;
     add_child2_id_type?: string;
     add_child2_ic?: string | null;
     add_child2_passport?: string | null;
@@ -78,7 +78,7 @@ declare module "registration" {
     add_child3_nickname?: string;
     add_child3_gender?: string;
     add_child3_age?: number;
-    add_child3_dob?: string | null;
+    add_child3_dob?: Date | null;
     add_child3_id_type?: string;
     add_child3_ic?: string | null;
     add_child3_passport?: string | null;

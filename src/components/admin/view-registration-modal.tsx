@@ -24,8 +24,6 @@ interface ViewRegistrationModalProps {
   onClose: () => void;
 }
 
-
-
 const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
   registration,
   onClose,
@@ -37,14 +35,14 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
   const isPDF = (fileName: string) => {
     return /\.pdf$/i.test(fileName);
   };
-  
+
   return (
     <Dialog open={true} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>View Registration</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <h2 className="font-bold mb-2">Main Contact Information</h2>
+            <h2 className="mb-2 font-bold">Main Contact Information</h2>
             <Table>
               <TableBody>
                 <TableRow>
@@ -68,7 +66,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
           </Grid>
 
           <Grid item xs={12}>
-            <h2 className="font-bold mb-2">Guardian 1 Information</h2>
+            <h2 className="mb-2 font-bold">Guardian 1 Information</h2>
             <Table>
               <TableBody>
                 <TableRow>
@@ -103,7 +101,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
           </Grid>
 
           <Grid item xs={12}>
-            <h2 className="font-bold mb-2">Guardian 2 Information</h2>
+            <h2 className="mb-2 font-bold">Guardian 2 Information</h2>
             <Table>
               <TableBody>
                 <TableRow>
@@ -139,7 +137,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
 
           {registration.add_adult_amount > 0 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Additional Adult 1 Information</h2>
+              <h2 className="mb-2 font-bold">Additional Adult 1 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -167,7 +165,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
 
           {registration.add_adult_amount > 1 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Additional Adult 2 Information</h2>
+              <h2 className="mb-2 font-bold">Additional Adult 2 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -195,7 +193,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
 
           {registration.add_adult_amount > 2 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Additional Adult 3 Information</h2>
+              <h2 className="mb-2 font-bold">Additional Adult 3 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -222,7 +220,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
           )}
 
           <Grid item xs={12}>
-            <h2 className="font-bold mb-2">Child 1 Information</h2>
+            <h2 className="mb-2 font-bold">Child 1 Information</h2>
             <Table>
               <TableBody>
                 <TableRow>
@@ -270,7 +268,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
 
           {registration.children_amount > 1 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Child 2 Information</h2>
+              <h2 className="mb-2 font-bold">Child 2 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -319,7 +317,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
 
           {registration.children_amount > 2 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Child 3 Information</h2>
+              <h2 className="mb-2 font-bold">Child 3 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -366,9 +364,9 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
             </Grid>
           )}
 
-          {registration.add_child_amount as number > 0 && (
+          {(registration.add_child_amount as number) > 0 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Additional Child 1 Information</h2>
+              <h2 className="mb-2 font-bold">Additional Child 1 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -417,9 +415,9 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
             </Grid>
           )}
 
-          {registration.add_child_amount as number > 1 && (
+          {(registration.add_child_amount as number) > 1 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Additional Child 2 Information</h2>
+              <h2 className="mb-2 font-bold">Additional Child 2 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -468,9 +466,9 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
             </Grid>
           )}
 
-          {registration.add_child_amount as number > 2 && (
+          {(registration.add_child_amount as number) > 2 && (
             <Grid item xs={12}>
-              <h2 className="font-bold mb-2">Additional Child 3 Information</h2>
+              <h2 className="mb-2 font-bold">Additional Child 3 Information</h2>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -519,11 +517,10 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
             </Grid>
           )}
 
-
           <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom>
-          Package Details
-        </Typography>
+            <Typography variant="h6" gutterBottom>
+              Package Details
+            </Typography>
             <List>
               {registration.package_default === 2800 && (
                 <ListItem>
@@ -567,8 +564,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
               <strong>Total Amount Paid: </strong>RM {registration.total_amount}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
-          </Grid>
+          <Grid item xs={12}></Grid>
 
           {registration.payment_image && (
             <Grid item xs={12}>
@@ -584,21 +580,21 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
               )}
               {isPDF(new URL(registration.payment_image).pathname) && (
                 <Button
-                variant="outlined"
-                color="primary"
-                href={new URL(registration.payment_image).pathname}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Payment Receipt (PDF)
-              </Button>
+                  variant="outlined"
+                  color="primary"
+                  href={new URL(registration.payment_image).pathname}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Payment Receipt (PDF)
+                </Button>
               )}
-              {!isImage(new URL(registration.payment_image).pathname) && !isPDF(new URL(registration.payment_image).pathname) && (
-                <Typography>Unsupported file type</Typography>
-              )}
+              {!isImage(new URL(registration.payment_image).pathname) &&
+                !isPDF(new URL(registration.payment_image).pathname) && (
+                  <Typography>Unsupported file type</Typography>
+                )}
             </Grid>
           )}
-
         </Grid>
       </DialogContent>
       <DialogActions>
