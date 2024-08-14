@@ -345,7 +345,8 @@ const RegisterForm: React.FC = () => {
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  const executeScroll = () => formRef.current?.scrollIntoView({ behavior: "smooth" });
+  const executeScroll = () =>
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <article>
@@ -2517,7 +2518,7 @@ const RegisterForm: React.FC = () => {
                   <br />
                   1) 活动适合5岁至10岁的儿童
                   <br />
-                  Activity are suitable for kids aged 5 years old to 10 years
+                  Activities are suitable for kids aged 5 years old to 10 years
                   old.
                   <br />
                   <br />
