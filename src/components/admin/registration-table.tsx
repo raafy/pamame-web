@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React from "react";
 import {
   Table,
   TableBody,
@@ -13,9 +13,12 @@ import {
   List,
   ListItem,
   ListItemText,
-} from '@mui/material';
-import { Visibility as VisibilityIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import type { Registration } from 'registration';
+} from "@mui/material";
+import {
+  Visibility as VisibilityIcon,
+  Delete as DeleteIcon,
+} from "@mui/icons-material";
+import type { Registration } from "registration";
 
 interface RegistrationTableProps {
   registrations: Registration[];
@@ -29,7 +32,8 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
   onDeleteRequest,
 }) => {
   const sortedRegistrations = [...registrations].sort(
-    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
   );
 
   return (
@@ -37,13 +41,13 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell className='font-bold'>No.</TableCell>
-            <TableCell className='font-bold'>Created Date</TableCell>
-            <TableCell className='font-bold'>Name</TableCell>
-            <TableCell className='font-bold'>Phone Number</TableCell>
-            <TableCell className='font-bold'>Package</TableCell>
-            <TableCell className='font-bold'>Amount Paid</TableCell>
-            <TableCell className='font-bold'>Actions</TableCell>
+            <TableCell className="font-bold">No.</TableCell>
+            <TableCell className="font-bold">Created Date</TableCell>
+            <TableCell className="font-bold">Name</TableCell>
+            <TableCell className="font-bold">Phone Number</TableCell>
+            <TableCell className="font-bold">Pax</TableCell>
+            <TableCell className="font-bold">Amount Paid</TableCell>
+            <TableCell className="font-bold">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -51,51 +55,23 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {new Date(registration.created_at).toLocaleDateString()}
+                {new Date(registration.created_at).toLocaleDateString("ms-MY")}
               </TableCell>
-              <TableCell>{registration.main_contact === "Guardian 1" ? registration.guardian1_name : registration.guardian2_name}</TableCell>
-              <TableCell>{registration.main_contact === "Guardian 2" ? registration.guardian1_contact_no : registration.guardian2_contact_no}</TableCell>
               <TableCell>
-              <List>
-              {registration.package_default === 2800 && (
-                <ListItem>
-                  <ListItemText primaryTypographyProps={{ fontSize: '14px' }} primary="2 Adults 1 Child" />
-                </ListItem>
-              )}
-              {registration.package_default === 1900 && (
-                <ListItem>
-                  <ListItemText primaryTypographyProps={{ fontSize: '14px' }} primary="1 Adult 1 Child" />
-                </ListItem>
-              )}
-              {registration.addon_children_below_4 > 0 && (
-                <ListItem>
-                  <ListItemText primaryTypographyProps={{ fontSize: '14px' }}
-                    primary={`添加额外孩子 (<4yo) Additional Child (<4yo) x ${
-                      registration.addon_children_below_4 / 60
-                    }`}
-                  />
-                </ListItem>
-              )}
-              {registration.addon_children_5_to_10 > 0 && (
-                <ListItem>
-                  <ListItemText primaryTypographyProps={{ fontSize: '14px' }}
-                    primary={`添加额外孩子 (5-10yo) Additional Child (5-10yo) x ${
-                      registration.addon_children_5_to_10 / 900
-                    }`}
-                  />
-                </ListItem>
-              )}
-              {registration.addon_above_10 > 0 && (
-                <ListItem>
-                  <ListItemText primaryTypographyProps={{ fontSize: '14px' }}
-                    primary={`添加额外成人 (>12yo) Additional Adult (>12yo) x ${
-                      registration.addon_above_10 / 450
-                    }`}
-                  />
-                </ListItem>
-              )}
-            </List>
-
+                {registration.main_contact === "Guardian 1"
+                  ? registration.guardian1_name
+                  : registration.guardian2_name}
+              </TableCell>
+              <TableCell>
+                {registration.main_contact === "Guardian 2"
+                  ? registration.guardian1_contact_no
+                  : registration.guardian2_contact_no}
+              </TableCell>
+              <TableCell>
+                {2 + registration.add_adult_amount}{" "}
+                Adult(s){" "}
+                {(!!registration.add_child_amount ? registration.add_child_amount : 0) +
+                  registration.children_amount } Kid(s)
               </TableCell>
               <TableCell>RM {registration.total_amount}</TableCell>
               <TableCell>
