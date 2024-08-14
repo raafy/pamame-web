@@ -37,7 +37,7 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
     setNumPages(numPages);
   }
   const isImage = (fileName: string) => {
-    return /\.(jpg|jpeg|png|gif)$/i.test(fileName);
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
   };
 
   const isPDF = (fileName: string) => {
@@ -583,6 +583,8 @@ const ViewRegistrationModal: React.FC<ViewRegistrationModalProps> = ({
                 <Image
                   src={registration.payment_image}
                   alt="Receipt"
+                  width={500}
+                  height={500}
                   style={{ width: "100%", height: "auto" }}
                 />
               )}
