@@ -375,7 +375,7 @@ const RegisterForm: React.FC = () => {
               );
             })}
           </Stepper>
-          {activeStep === 0 && (
+          {activeStep === 2 && (
             <>
               <div>
                 <p>
@@ -2386,7 +2386,7 @@ const RegisterForm: React.FC = () => {
               )}
             </>
           )}
-          {activeStep === 2 && (
+          {activeStep === 0 && (
             <>
               <div>
                 <h1 className="font-beachday text-xl md:text-3xl">
@@ -2578,16 +2578,23 @@ const RegisterForm: React.FC = () => {
                   <br />
                   <strong>银行户口 Account Number:</strong> 8605345668
                   <br />
-                  <br />
-                  <Button
-                    variant="outlined"
-                    onClick={copyHandle}
-                    startIcon={<FileCopy />}
-                  >
-                    Copy Account Number
-                  </Button>
-                  <br />
                 </p>
+                <Button
+                  variant="outlined"
+                  onClick={copyHandle}
+                  startIcon={<FileCopy />}
+                >
+                  Copy Account Number
+                </Button>
+                <div className="flex w-full items-center justify-center">
+                  <Image
+                    src={"/register/qr-code.webp"}
+                    alt="Bank QR Code"
+                    width={766}
+                    height={1080}
+                    className="h-auto w-full max-w-sm"
+                  />
+                </div>
               </div>
               <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
