@@ -375,7 +375,7 @@ const RegisterForm: React.FC = () => {
               );
             })}
           </Stepper>
-          {activeStep === 2 && (
+          {activeStep === 0 && (
             <>
               <div>
                 <p>
@@ -2386,7 +2386,7 @@ const RegisterForm: React.FC = () => {
               )}
             </>
           )}
-          {activeStep === 0 && (
+          {activeStep === 2 && (
             <>
               <div>
                 <h1 className="font-beachday text-xl md:text-3xl">
