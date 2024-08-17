@@ -13,10 +13,10 @@ const LittleHeroChallenge: React.FC = () => {
       <section>
         <Image
           priority
-          src="/images/kids/kids-hero-banner.webp"
+          src="/images/kids/hero-banner.webp"
           alt="Kids Hero Banner"
-          width={1007}
-          height={351}
+          width={4028}
+          height={1404}
           style={{
             width: "100vw",
             height: "auto",
@@ -31,16 +31,16 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={1007}
-          height={1456}
+          width={4028}
+          height={5824}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
-          src="/images/kids/kids-s1.webp"
+          src="/images/kids/s1.webp"
           alt="Section One - Little Hero Exploration"
-          width={941}
-          height={1169}
+          width={3761}
+          height={4673}
           style={{
             width: "80vw",
             height: "auto",
@@ -50,10 +50,10 @@ const LittleHeroChallenge: React.FC = () => {
       </section>
       <Image
         priority
-        src="/images/kids/kids-highlights-banner.webp"
+        src="/images/kids/highlights-banner.webp"
         alt="Highlight Activities & Learning Banner"
-        width={1007}
-        height={154}
+        width={4028}
+        height={614}
         style={{
           width: "100vw",
           objectFit: "cover",
@@ -65,16 +65,16 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={1007}
-          height={1456}
+          width={4028}
+          height={5824}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
-          src="/images/kids/kids-s2.webp"
+          src="/images/kids/s2.webp"
           alt="Section Two - Highlight Activities & Learning"
-          width={950}
-          height={1139}
+          width={3797}
+          height={4553}
           style={{
             width: "100vw",
             height: "auto",
@@ -85,10 +85,10 @@ const LittleHeroChallenge: React.FC = () => {
       </section>
       <Image
         priority
-        src="/images/kids/kids-teacher-banner.webp"
+        src="/images/kids/teacher-banner.webp"
         alt="Teacher Kiwi & Mushroom"
-        width={1007}
-        height={357}
+        width={4028}
+        height={1425}
         style={{
           width: "100vw",
           objectFit: "cover",
@@ -100,16 +100,16 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={1007}
-          height={1456}
+          width={4028}
+          height={5824}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
-          src="/images/kids/kids-s3.webp"
+          src="/images/kids/s3.webp"
           alt="Section Three - Little Heroes Wilderness Cooking"
-          width={925}
-          height={945}
+          width={3697}
+          height={3778}
           style={{
             width: "100vw",
             height: "auto",
@@ -119,10 +119,10 @@ const LittleHeroChallenge: React.FC = () => {
       </section>
       <Image
         priority
-        src="/images/kids/kids-coach-banner.webp"
+        src="/images/kids/coach-banner.webp"
         alt="Coach Wendy Banner"
-        width={1007}
-        height={354}
+        width={4028}
+        height={1416}
         style={{
           width: "100vw",
           objectFit: "cover",
@@ -134,15 +134,15 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={1007}
-          height={1456}
+          width={4028}
+          height={5824}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
-          src="/images/kids/kids-s4.webp"
-          width={825}
-          height={892}
+          src="/images/kids/s4.webp"
+          width={3298}
+          height={3565}
           alt="Section Four - Little Heroes Wilderness Cooking"
           style={{
             width: "100vw",
@@ -152,10 +152,10 @@ const LittleHeroChallenge: React.FC = () => {
         />
         <Image
           priority
-          src="/images/kids/kids-join-head.webp"
+          src="/images/kids/join-head.webp"
           alt="More Exciting Activities Await You!"
-          width={1007}
-          height={350}
+          width={4028}
+          height={974}
           style={{
             width: "100vw",
             height: "auto",
