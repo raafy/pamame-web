@@ -15,8 +15,8 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/kids/hero-banner.webp"
           alt="Kids Hero Banner"
-          width={4028}
-          height={1404}
+          width={2014}
+          height={702}
           style={{
             width: "100vw",
             height: "auto",
@@ -31,16 +31,16 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={4028}
-          height={5824}
+          width={2014}
+          height={2912}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
           src="/images/kids/s1.webp"
           alt="Section One - Little Hero Exploration"
-          width={3761}
-          height={4673}
+          width={1881}
+          height={2337}
           style={{
             width: "80vw",
             height: "auto",
@@ -52,8 +52,8 @@ const LittleHeroChallenge: React.FC = () => {
         priority
         src="/images/kids/highlights-banner.webp"
         alt="Highlight Activities & Learning Banner"
-        width={4028}
-        height={614}
+        width={2014}
+        height={307}
         style={{
           width: "100vw",
           objectFit: "cover",
@@ -65,16 +65,16 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={4028}
-          height={5824}
+          width={2014}
+          height={2912}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
           src="/images/kids/s2.webp"
           alt="Section Two - Highlight Activities & Learning"
-          width={3797}
-          height={4553}
+          width={1899}
+          height={2277}
           style={{
             width: "100vw",
             height: "auto",
@@ -87,8 +87,8 @@ const LittleHeroChallenge: React.FC = () => {
         priority
         src="/images/kids/teacher-banner.webp"
         alt="Teacher Kiwi & Mushroom"
-        width={4028}
-        height={1425}
+        width={2014}
+        height={713}
         style={{
           width: "100vw",
           objectFit: "cover",
@@ -100,16 +100,16 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={4028}
-          height={5824}
+          width={2014}
+          height={2912}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
           src="/images/kids/s3.webp"
           alt="Section Three - Little Heroes Wilderness Cooking"
-          width={3697}
-          height={3778}
+          width={1849}
+          height={1889}
           style={{
             width: "100vw",
             height: "auto",
@@ -121,8 +121,8 @@ const LittleHeroChallenge: React.FC = () => {
         priority
         src="/images/kids/coach-banner.webp"
         alt="Coach Wendy Banner"
-        width={4028}
-        height={1416}
+        width={2014}
+        height={708}
         style={{
           width: "100vw",
           objectFit: "cover",
@@ -134,15 +134,15 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/bg/kids-bg.webp"
           alt="Background Image"
-          width={4028}
-          height={5824}
+          width={2014}
+          height={2912}
           className="absolute -z-10 h-auto w-auto object-cover object-top"
         />
         <Image
           priority
           src="/images/kids/s4.webp"
-          width={3298}
-          height={3565}
+          width={1649}
+          height={1783}
           alt="Section Four - Little Heroes Wilderness Cooking"
           style={{
             width: "100vw",
@@ -154,8 +154,8 @@ const LittleHeroChallenge: React.FC = () => {
           priority
           src="/images/kids/join-head.webp"
           alt="More Exciting Activities Await You!"
-          width={4028}
-          height={974}
+          width={2014}
+          height={487}
           style={{
             width: "100vw",
             height: "auto",
