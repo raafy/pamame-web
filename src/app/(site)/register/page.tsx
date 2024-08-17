@@ -10,10 +10,10 @@ const Register: React.FC = () => {
   return (
     <div className="flex flex-col items-center self-center">
       <Image
-        src="/register/glamping-banner.svg"
+        src="/images/reg/reg-banner.webp"
         alt={"Glamping Banner"}
-        width={1920}
-        height={500}
+        width={1277}
+        height={521}
         className="h-auto w-full"
         priority
       />

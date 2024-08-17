@@ -1,6 +1,5 @@
 import { type Metadata } from "next";
 import Image from "next/image";
-import Countdown from "@/components/site/countdown";
 
 export const metadata: Metadata = {
   title: "PaMaMe - Terms & Conditions",
@@ -12,9 +11,9 @@ export default function TNCPage() {
       <section>
         <Image
           priority
-          src={"/home/banner-hero.webp"}
+          src="/images/home/home-hero-banner.webp"
           width={1920}
-          height={1920}
+          height={634}
           className="h-auto w-full"
           alt="Hero Banner"
         />
