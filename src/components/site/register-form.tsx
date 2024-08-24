@@ -1405,7 +1405,10 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const normalizedDte = date.startOf("day");
+                                field.onChange(normalizedDte);
+                              }
                               console.log(field.value);
                             }}
                           />
@@ -1582,7 +1585,11 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const normalizedDte = date.startOf("day");
+                                field.onChange(normalizedDte);
+                              }
+                              console.log(field.value);
                             }}
                           />
                         );
@@ -1758,7 +1765,11 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const normalizedDte = date.startOf("day");
+                                field.onChange(normalizedDte);
+                              }
+                              console.log(field.value);
                             }}
                           />
                         );
@@ -1960,7 +1971,11 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const normalizedDte = date.startOf("day");
+                                field.onChange(normalizedDte);
+                              }
+                              console.log(field.value);
                             }}
                           />
                         );
@@ -2131,7 +2146,11 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const normalizedDte = date.startOf("day");
+                                field.onChange(normalizedDte);
+                              }
+                              console.log(field.value);
                             }}
                           />
                         );
@@ -2302,7 +2321,11 @@ const RegisterForm: React.FC = () => {
                             }}
                             inputRef={field.ref}
                             onChange={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const normalizedDte = date.startOf("day");
+                                field.onChange(normalizedDte);
+                              }
+                              console.log(field.value);
                             }}
                           />
                         );
