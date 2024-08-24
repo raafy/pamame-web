@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { join } from "path";
 import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
 
@@ -140,9 +141,9 @@ export async function POST(req: NextRequest) {
         add_child3_ic: data.addChild3IC ?? null,
         add_child3_passport: data.addChild3Passport ?? null,
         package_default: parseInt(data.packageDefault),
-        addon_children_below_4: parseInt(data.addonChildrenBelow4)/60,
-        addon_children_5_to_10: parseInt(data.addonChildren5to10)/900,
-        addon_above_10: parseInt(data.addonAbove10)/450,
+        addon_children_below_4: parseInt(data.addonChildrenBelow4) / 60,
+        addon_children_5_to_10: parseInt(data.addonChildren5to10) / 900,
+        addon_above_10: parseInt(data.addonAbove10) / 450,
         heard_info: data.heardInfo,
         heard_info_others: data.heardInfoOthers ?? null,
         heard_info_scode: data.heardInfoSCode ?? null,
@@ -413,7 +414,7 @@ export async function POST(req: NextRequest) {
                 </tr>
                 <tr>
                   <th>Child 1 DOB</th>
-                  <td>${data.child1DOB}</td>
+                  <td>${dayjs(data.child1DOB).format("DD/MM/YYYY")}</td>
                 </tr>
                 <tr>
                   <th>Child 1 ID Type</th>
@@ -461,7 +462,7 @@ export async function POST(req: NextRequest) {
                 </tr>
                 <tr>
                   <th>Child 2 DOB</th>
-                  <td>${data.child2DOB}</td>
+                  <td>${dayjs(data.child2DOB).format("DD/MM/YYYY")}</td>
                 </tr>
                 <tr>
                   <th>Child 2 ID Type</th>
@@ -509,7 +510,7 @@ export async function POST(req: NextRequest) {
                 </tr>
                 <tr>
                   <th>Child 3 DOB</th>
-                  <td>${data.child3DOB}</td>
+                  <td>${dayjs(data.child3DOB).format("DD/MM/YYYY")}</td>
                 </tr>
                 <tr>
                   <th>Child 3 ID Type</th>
@@ -557,7 +558,7 @@ export async function POST(req: NextRequest) {
                 </tr>
                 <tr>
                   <th>Additional Child 1 DOB</th>
-                  <td>${data.addChild1DOB}</td>
+                  <td>${dayjs(data.addChild1DOB).format("DD/MM/YYYY")}</td>
                 </tr>
                 <tr>
                   <th>Additional Child 1 ID Type</th>
@@ -605,7 +606,7 @@ export async function POST(req: NextRequest) {
                 </tr>
                 <tr>
                   <th>Additional Child 2 DOB</th>
-                  <td>${data.addChild2DOB}</td>
+                  <td>${dayjs(data.addChild2DOB).format("DD/MM/YYYY")}</td>
                 </tr>
                 <tr>
                   <th>Additional Child 2 ID Type</th>
@@ -653,7 +654,7 @@ export async function POST(req: NextRequest) {
                 </tr>
                 <tr>
                   <th>Additional Child 3 DOB</th>
-                  <td>${data.addChild3DOB}</td>
+                  <td>${dayjs(data.addChild3DOB).format("DD/MM/YYYY")}</td>
                 </tr>
                 <tr>
                   <th>Additional Child 3 ID Type</th>
