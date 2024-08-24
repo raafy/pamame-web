@@ -2623,7 +2623,7 @@ const RegisterForm: React.FC = () => {
                 </Button>
                 <div className="flex w-full items-center justify-center">
                   <Image
-                    src={"/register/qr-code.webp"}
+                    src={"/images/reg/qr-code.jpeg"}
                     alt="Bank QR Code"
                     width={766}
                     height={1080}
