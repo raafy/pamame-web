@@ -7,7 +7,7 @@ import {
   BookTextIcon,
   LineChartIcon,
   LogOutIcon,
-  MenuIcon
+  MenuIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,12 +77,6 @@ const DashboardNavigation: React.FC = () => {
           <DropdownMenuContent className="m-2 w-56 md:hidden">
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => router.push("/admin/dashboard")}>
-                <LineChartIcon className="mr-2 h-4 w-4" />
-                <span>Analytics</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => router.push("/admin/dashboard/registration")}
-              >
                 <BookTextIcon className="mr-2 h-4 w-4" />
                 <span>Registrations</span>
               </DropdownMenuItem>
