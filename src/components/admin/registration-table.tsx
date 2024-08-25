@@ -69,14 +69,12 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
               </TableCell>
               <TableCell>
                 {registration.package_default === 2800
-                  ? Math.floor(2 + registration.addon_above_10 / 450)
-                  : Math.floor(1 + registration.addon_above_10 / 450)}{" "}
+                  ? 2 + registration.addon_above_10
+                  : 1 + registration.addon_above_10}{" "}
                 Adult(s){" "}
-                {Math.floor(
-                  registration.addon_children_below_4 / 60 +
-                    registration.addon_children_5_to_10 / 900 +
-                    1,
-                )}{" "}
+                {registration.addon_children_below_4 +
+                  registration.addon_children_5_to_10 +
+                  1}{" "}
                 Kid(s)
               </TableCell>
               <TableCell>RM {registration.total_amount}</TableCell>
