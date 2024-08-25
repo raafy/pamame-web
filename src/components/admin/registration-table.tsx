@@ -68,10 +68,14 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
                   : registration.guardian2_contact_no}
               </TableCell>
               <TableCell>
-                {2 + registration.add_adult_amount}{" "}
+                {registration.package_default === 2800
+                  ? 2 + registration.addon_above_10 / 450
+                  : 1 + registration.addon_above_10 / 450}{" "}
                 Adult(s){" "}
-                {(!!registration.add_child_amount ? registration.add_child_amount : 0) +
-                  registration.children_amount } Kid(s)
+                {1 +
+                  registration.addon_children_below_4 / 60 +
+                  registration.addon_children_5_to_10 / 900}{" "}
+                Kid(s)
               </TableCell>
               <TableCell>RM {registration.total_amount}</TableCell>
               <TableCell>
