@@ -54,7 +54,9 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
           {sortedRegistrations.map((registration, index) => (
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>{registration.created_at.toString()}</TableCell>
+              <TableCell>
+                {new Date(registration.created_at).toLocaleDateString()}
+              </TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
                   ? registration.guardian1_name
