@@ -56,7 +56,9 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {dayjs(registration.created_at).format("DD/MM/YYYY")}
+                {dayjs(registration.created_at)
+                  .locale("ms-MY")
+                  .format("DD/MM/YYYY")}
               </TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
