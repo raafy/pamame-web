@@ -31,6 +31,11 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
   onView,
   onDeleteRequest,
 }) => {
+  const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   const sortedRegistrations = [...registrations].sort(
     (a, b) =>
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
@@ -55,7 +60,7 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {new Date(registration.created_at).toDateString()}
+                {formatDate(registration.created_at.toString())}
               </TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
