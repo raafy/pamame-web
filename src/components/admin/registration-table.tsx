@@ -18,13 +18,7 @@ import {
   Visibility as VisibilityIcon,
   Delete as DeleteIcon,
 } from "@mui/icons-material";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import type { Registration } from "registration";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 interface RegistrationTableProps {
   registrations: Registration[];
@@ -60,12 +54,7 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
           {sortedRegistrations.map((registration, index) => (
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>
-                {dayjs(registration.created_at)
-                  .utc()
-                  .tz("Asia/Kuala_Lumpur")
-                  .format("DD/MM/YYYY")}
-              </TableCell>
+              <TableCell>{registration.created_at.toDateString()}</TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
                   ? registration.guardian1_name
