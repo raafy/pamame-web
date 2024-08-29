@@ -18,6 +18,7 @@ import {
   Visibility as VisibilityIcon,
   Delete as DeleteIcon,
 } from "@mui/icons-material";
+import dayjs from "dayjs";
 import type { Registration } from "registration";
 
 interface RegistrationTableProps {
@@ -55,7 +56,7 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {new Date(registration.created_at).toLocaleDateString("ms-MY")}
+                {dayjs(registration.created_at).format("DD/MM/YYYY")}
               </TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
