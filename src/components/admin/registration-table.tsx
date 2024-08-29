@@ -55,7 +55,7 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {new Date(registration.created_at).toLocaleDateString()}
+                {new Date(registration.created_at).toDateString()}
               </TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
