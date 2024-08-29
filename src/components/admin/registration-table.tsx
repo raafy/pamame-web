@@ -31,8 +31,11 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
   onView,
   onDeleteRequest,
 }) => {
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
+  const formatDate = (date: Date) => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const year = date.getFullYear();
+
     return `${day}/${month}/${year}`;
   };
 
@@ -59,9 +62,7 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
           {sortedRegistrations.map((registration, index) => (
             <TableRow key={registration.id}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>
-                {formatDate(registration.created_at.toString())}
-              </TableCell>
+              <TableCell>{formatDate(registration.created_at)}</TableCell>
               <TableCell>
                 {registration.main_contact === "Guardian 1"
                   ? registration.guardian1_name
