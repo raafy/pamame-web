@@ -48,6 +48,14 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "PaMaMe",
+    description: "Always accompany, Love abundantly",
+    site: "@site",
+    creator: "@creator",
+    images: "https://pamame.com/og-image.png",
+  },
 };
 
 const RootLayout: React.FC<Readonly<RootLayoutProps>> = ({ children }) => {
