@@ -36,6 +36,18 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
   },
+  openGraph: {
+    type: "website",
+    url: "https://pamame.com",
+    title: "PaMaMe",
+    description: "Always accompany, Love abundantly",
+    siteName: "PaMaMe",
+    images: [
+      {
+        url: "https://pamame.com/images/reg/reg-banner.webp",
+      },
+    ],
+  },
 };
 
 const RootLayout: React.FC<Readonly<RootLayoutProps>> = ({ children }) => {
