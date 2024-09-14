@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     siteName: "PaMaMe",
     images: [
       {
-        url: "https://pamame.com/images/reg/reg-banner.webp",
+        url: "https://pamame.com/og-image.webp",
       },
     ],
   },
