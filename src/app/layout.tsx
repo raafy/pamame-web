@@ -1,9 +1,9 @@
+import UnderConstruction from "@/components/site/under-construction";
 import "@/styles/globals.css";
 import clsx from "clsx";
 import { Metadata } from "next";
-import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
-import Head from "next/head";
+import localFont from "next/font/local";
 import Script from "next/script";
 
 interface RootLayoutProps {
@@ -59,6 +59,19 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: React.FC<Readonly<RootLayoutProps>> = ({ children }) => {
+  const isUnderConstruction =
+    process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION === "true";
+
+  if (isUnderConstruction) {
+    return (
+      <html lang="en" className={clsx(poppins.variable, beachday.variable)}>
+        <body>
+          <UnderConstruction />
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html
       lang="en"
