@@ -112,21 +112,6 @@ npm run build && npm run start
 
 ---
 
-## 📁 Folder Structure
-
-```
-.
-├── pages/             # Next.js routes
-├── components/        # Shared UI components
-├── lib/               # Helpers and utilities
-├── prisma/            # Prisma schema, seed, and migration logic
-├── public/            # Static assets
-├── styles/            # Global and component styles
-└── .env               # Environment variables
-```
-
----
-
 ## 👤 Author
 
 **Raafy Shiham**
